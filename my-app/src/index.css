@@ -1,0 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+
+/* base styles */
+* {
+  box-sizing: content-box;
+  margin: 0;
+  font-family: "Quicksand";
+}
+body {
+  background: rgb(63, 53, 78);
+}
+.app-title-bar {
+  color: floralwhite;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  max-width: 600px;
+  margin: auto;
+  background: rgb(110, 93, 136);
+  justify-content: center;
+}
+.app-title {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  max-width: 700px;
+  padding: 40px;
+  margin: auto;
+
+  /* border: 1px solid #f2f2f2; */
+}
+
+label {
+  padding: 10px;
+
+  color: floralwhite;
+}
+
+.gameBoard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 20px;
+  padding: 10px;
+
+  color: floralwhite;
+  border: 1px solid #f2f2f2;
+}
