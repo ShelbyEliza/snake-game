@@ -1,4 +1,4 @@
-import GameBoard from "./GameBoard";
+import RenderGameBoard from "./RenderGameBoard";
 import TitleBar from "./TitleBar";
 
 function App() {
@@ -6,7 +6,7 @@ function App() {
     <div className="App">
       <TitleBar></TitleBar>
       <div className="content">
-        <GameBoard row={8} col={8} />
+        <RenderGameBoard />
       </div>
     </div>
   );
