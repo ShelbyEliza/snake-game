@@ -43,6 +43,11 @@ label {
   color: floralwhite;
 }
 
+form {
+  display: flex;
+  align-items: center;
+}
+
 .gameBoard-title {
   display: flex;
   justify-content: center;

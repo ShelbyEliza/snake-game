@@ -1,11 +1,9 @@
-// import React from "react";
-// import { useState, useEffect } from "react";
-// import { GameBoard } from "./GameBoard"
+// import { useEffect } from "react";
 
-// const BoardSelection = () => {
+// const BoardSelection = (target, gameBoard) => {
 
-//   useEffect((e) => {
-//     switch (e.target.value) {
+//   useEffect(() => {
+//     switch (target) {
 //       case 6:
 //         gameBoard.width("300px");
 //         gameBoard.height("300px");
@@ -22,6 +20,7 @@
 //         gameBoard.width("300px");
 //         gameBoard.height("300px");
 //     }
-//   });
+//   }, [target]);
 
+//   return ()
 // }

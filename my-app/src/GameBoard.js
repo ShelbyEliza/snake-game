@@ -1,20 +1,21 @@
 import React from "react";
-import { useState, useEffect } from "react";
-// import ReactDOM from "react-dom";
+import { useState } from "react";
+// import { BoardSelection } from "./BoardSelection";
 
 const GameBoard = () => {
-  const [rows, setRow] = useState(6);
-  const [cols, setCol] = useState(6);
-
-  var counterRow = -1;
-  var spliceValue = 0;
-
+  const [rows, setRows] = useState(6);
+  const [cols, setCols] = useState(6);
   const gameBoard = new Array(rows);
 
   for (var i = 0; i < gameBoard.length; i++) {
     gameBoard[i] = new Array(cols);
   }
-  console.log(gameBoard);
+
+  console.log(rows, cols);
+  console.log(`gameBoard: ${gameBoard}`);
+
+  var counterRow = -1;
+  var spliceValue = 0;
 
   for (let row = 0; row < rows; row++) {
     counterRow++;
@@ -23,7 +24,6 @@ const GameBoard = () => {
         if (spliceValue === rows) {
           spliceValue = 0;
         }
-        // console.log(`spliceValue: ${spliceValue}, counterRow: ${counterRow} || row: ${row}, col: ${col}`);
         console.log(
           `spliceValue: ${spliceValue}, counterRow: ${counterRow} || row: ${row}, col: ${col}`
         );
@@ -34,45 +34,24 @@ const GameBoard = () => {
             {row + 1}, {col + 1}
           </div>
         );
-
         spliceValue++;
       }
     }
   }
 
-  // useEffect((e) => {
-  //   switch (e.target.value) {
-  //     case 6:
-  //       gameBoard.width("300px");
-  //       gameBoard.height("300px");
-  //       break;
-  //     case 7:
-  //       gameBoard.width("350px");
-  //       gameBoard.height("350px");
-  //       break;
-  //     case 8:
-  //       gameBoard.width("400px");
-  //       gameBoard.height("400px");
-  //       break;
-  //     default:
-  //       gameBoard.width("300px");
-  //       gameBoard.height("300px");
-  //   }
-  // });
-
   console.log(gameBoard);
 
   return (
     <div className="container">
-      <form onChange={useEffect}>
+      <form>
         <label>Pick Your GameBoard Size:</label>
         <select
           className="row-col-selection"
           value={rows}
-          // onChange={handleChange}
           onChange={(e) => {
-            setRow(e.target.value);
-            setCol(e.target.value);
+            // BoardSelection(e.target.value, gameBoard)
+            setRows(e.target.value);
+            setCols(e.target.value);
           }}
         >
           <option value={6}>6 x 6</option>
@@ -90,16 +69,3 @@ const GameBoard = () => {
 
 // gameBoard width = number of rows/cols * width of cells;
 export default GameBoard;
-
-// if (e.target.value === 6) {
-//   gameBoard.width("300px")
-//   gameBoard.height("300px")
-// }
-// if (e.target.value === 7) {
-//   gameBoard.width("350px")
-//   gameBoard.height("350px")
-// }
-// if (e.target.value === 8) {
-//   gameBoard.width("300px")
-//   gameBoard.height("300px")
-// }
