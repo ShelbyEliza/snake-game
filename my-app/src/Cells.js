@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 
-const Cell = (props) => {
-  const [isFood, setIsFood] = useState(false);
-  const [isSnakeHead, setIsSnakeHead] = useState(false);
+const Cells = (props) => {
+  // const [isFood, setIsFood] = useState(false);
+  // const [isSnakeHead, setIsSnakeHead] = useState(false);
 
   // const pickRandomCell = () => {
   //   return (
 
-  //   )
   // }
 
   return (
@@ -22,4 +21,4 @@ const Cell = (props) => {
   );
 };
 
-export default Cell;
+export default Cells;

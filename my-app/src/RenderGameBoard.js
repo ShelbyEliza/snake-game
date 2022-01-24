@@ -1,42 +1,27 @@
 import React from "react";
-import { useState } from "react";
-import BoardSelection from "./BoardSelection";
+// import GameBoard from "./GameBoard";
 import Cell from "./Cell";
 
 const RenderGameBoard = (props) => {
-  const [rows, setRows] = useState(6);
-  const [cols, setCols] = useState(6);
+  let size;
 
-  let size = 300;
-
-  const gameBoard = new Array(rows);
+  const gameBoard = new Array(props.rows);
 
   for (var i = 0; i < gameBoard.length; i++) {
-    gameBoard[i] = new Array(cols);
+    gameBoard[i] = new Array(props.cols);
   }
 
   var counterRow = -1;
   var spliceValue = 0;
 
-  for (let row = 0; row < rows; row++) {
+  for (let row = 0; row < props.rows; row++) {
     counterRow++;
-    for (let col = 0; col < cols; col++) {
-      if (spliceValue === rows) {
+    for (let col = 0; col < props.cols; col++) {
+      if (spliceValue === props.rows) {
         spliceValue = 0;
       }
 
       if (counterRow === row) {
-        // let cell = (
-        //   <div
-        //     id={row.toString() + "-" + col.toString()}
-        //     className="cell"
-        //     key={row.toString() + "-" + col.toString()}
-        //   >
-        //     {row + 1}, {col + 1}
-        //   </div>
-        // );
-        // let cell = <Cell row={row} col={col} />;
-
         gameBoard[row].splice(spliceValue, 1, <Cell row={row} col={col} />);
         spliceValue++;
       }
@@ -58,20 +43,18 @@ const RenderGameBoard = (props) => {
   };
 
   return (
-    <div className="container">
-      <BoardSelection
-        rows={rows}
-        cols={cols}
-        setCols={setCols}
-        setRows={setRows}
-      />
-      <div className="gameBoard-container">
-        <div
-          className="gameBoard"
-          style={{ width: changeSize(rows), height: changeSize(rows) }}
-        >
-          {gameBoard}
-        </div>
+    <div className="gameBoard-container">
+      {/* <GameBoard>
+      <Cell />
+    </GameBoard>  */}
+      <div
+        className="gameBoard"
+        style={{
+          width: changeSize(props.rows),
+          height: changeSize(props.rows),
+        }}
+      >
+        {gameBoard}
       </div>
     </div>
   );

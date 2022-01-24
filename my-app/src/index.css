@@ -53,20 +53,21 @@ form {
   justify-content: center;
   align-items: center;
 
-  margin: 10px;
+  margin-bottom: 30px;
+
   padding: 10px;
 
   color: floralwhite;
   border: 1px solid #f2f2f2;
 }
 
-.gameBoard-container {
+/* .gameBoard-container {
   width: 420px;
   height: 420px;
   display: flex;
   align-items: center;
   justify-content: center;
-}
+} */
 
 .gameBoard {
   display: flex;

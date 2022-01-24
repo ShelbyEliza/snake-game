@@ -1,4 +1,5 @@
-import RenderGameBoard from "./RenderGameBoard";
+import BoardSelection from "./BoardSelection";
+// import RenderGameBoard from "./RenderGameBoard";
 import TitleBar from "./TitleBar";
 
 function App() {
@@ -6,7 +7,8 @@ function App() {
     <div className="App">
       <TitleBar></TitleBar>
       <div className="content">
-        <RenderGameBoard />
+        {/* <RenderGameBoard /> */}
+        <BoardSelection />
       </div>
     </div>
   );
