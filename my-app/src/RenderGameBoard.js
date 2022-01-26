@@ -1,6 +1,6 @@
 import React from "react";
 // import GameBoard from "./GameBoard";
-import Cell from "./Cell";
+import Cell from "./RenderCells";
 
 const RenderGameBoard = (props) => {
   let size;
