@@ -73,8 +73,8 @@ form {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 550px;
-  height: 550px;
+  width: 660px;
+  height: 660px;
 
   margin: auto;
 
@@ -83,12 +83,18 @@ form {
 
 .cell {
   display: flex;
+
   align-items: center;
   justify-content: center;
+
+  width: 60px;
+  height: 60px;
+
+  font-size: 18px;
+  color: black;
+  white-space: nowrap;
+
   outline: 1px solid rgb(110, 93, 136);
-  width: 50px;
-  height: 50px;
-  font-size: small;
 }
 
 .isFood {
@@ -100,7 +106,7 @@ form {
   padding: 4px;
 
   border-radius: 50%;
-  background: rgb(65, 75, 160);
+  background: rgb(71, 80, 160);
 }
 
 .isSnake {
@@ -113,13 +119,18 @@ form {
 
   border-radius: 50%;
 
-  background: rgb(114, 42, 96);
+  background: rgb(114, 53, 99);
 }
-/* 
-.isNormal {
+
+.isSnakeHead {
   display: inline-block;
 
-  width: 10px;
-  height: 10px;
-  padding: 4px;
-} */
+  width: 20px;
+  height: 20px;
+
+  padding: 6px;
+
+  border-radius: 50%;
+
+  background: rgb(63, 224, 157);
+}
