@@ -1,0 +1,20 @@
+.TitleBar {
+  display: flex;
+  justify-content: center;
+
+  padding-top: 20px;
+  max-width: 600px;
+  margin: auto;
+
+  color: floralwhite;
+}
+.TitleBar .title {
+  display: flex;
+  padding: 7px 14px;
+
+  background: rgb(61, 24, 121);
+
+  border-bottom: 2px solid rgb(41, 15, 82);
+  border-top: 2px solid rgb(41, 15, 82);
+  border-radius: 10px;
+}

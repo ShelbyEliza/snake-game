@@ -1,0 +1,22 @@
+.StartGame {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+.StartGame button {
+  width: 60px;
+  height: 60px;
+  padding: 30px 30px;
+
+  background: rgb(95, 57, 155);
+
+  border-top: none;
+  border-left: none;
+  border-right: 2px solid rgba(215, 205, 230, 0.822);
+  border-bottom: 3px solid rgba(215, 205, 230, 0.822);
+  border-radius: 60px;
+
+  color: floralwhite;
+  font-size: 20px;
+  cursor: pointer;
+}

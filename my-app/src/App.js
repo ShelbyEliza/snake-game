@@ -1,21 +1,24 @@
-import TitleBar from "./TitleBar";
-import Cell from "./Cell";
+import TitleBar from "./components/TitleBar";
 import { useState, useEffect } from "react";
-import BoardInfo from "./BoardInfo";
-// import GenerateFood from "./GenerateFood";
-// import UpdateBoard from "./UpdateBoard";
+import BoardInfo from "./components/BoardInfo";
+import GameBoard from "./components/GameBoard";
+import StartGame from "./components/StartGame";
+// import GenerateFood from "./components/GenerateFood";
+// import UpdateBoard from "./components/UpdateBoard";
+
+const rows = 11;
+const cols = 11;
 
 function App() {
-  const [rows, setRows] = useState(11);
-  const [cols, setCols] = useState(11);
   const [gamePaused, setGamePaused] = useState(true);
+  const [time, setTime] = useState(0);
 
   const [board, setBoard] = useState([]);
   const [snake, setSnake] = useState([]);
+
   const [snakeHead, setSnakeHead] = useState();
 
-  const [time, setTime] = useState(0);
-  // const [direction, setDirection] = useState("down");
+  let count;
 
   useEffect(() => {
     const totalCells = rows * rows;
@@ -41,7 +44,7 @@ function App() {
     grid[initialFood].status = "isFood";
     setBoard(grid);
     console.log("Board Built");
-  }, [rows, cols]);
+  }, []);
 
   const buildSnake = () => {
     let snakeArray = board.filter((cell) => cell.status === "isSnake");
@@ -54,7 +57,6 @@ function App() {
 
   useEffect(() => {
     if (snake.length > 0) {
-      console.log(snake);
       setSnakeHead(snake[0]);
     }
   }, [snake]);
@@ -62,38 +64,33 @@ function App() {
   useEffect(() => {
     if (gamePaused === false) {
       setInterval(() => {
-        setTime((t) => t + 1);
-        // console.log(time);
+        console.log(count);
+        count++;
       }, 3000);
-      return () => clearInterval();
     }
-  }, [gamePaused]);
+    if (gamePaused === true) {
+      clearInterval();
+    }
+  }, [gamePaused, count]);
+
+  const handlePauseGame = () => {
+    if (gamePaused === true) {
+      console.log("Starting");
+      setGamePaused(false);
+    } else {
+      console.log("Pausing");
+      setGamePaused(true);
+    }
+  };
 
   return (
     <div className="App">
       <TitleBar></TitleBar>
-      <div className="start-game">
-        {gamePaused && (
-          <button onClick={() => setGamePaused(false)}>Start Game!</button>
-        )}
-        {!gamePaused && (
-          <button onClick={() => setGamePaused(true)}>Stop Game!</button>
-        )}
-      </div>
-      {snake.length > 0 && <BoardInfo snake={snake} />}
-      <div className="content">
-        {board && (
-          <div className="game-board">
-            {board.map((cell) => (
-              <Cell
-                key={cell.row.toString() + "-" + cell.col.toString()}
-                cell={cell}
-                status={cell.status}
-              ></Cell>
-            ))}
-          </div>
-        )}
-      </div>
+      {snake.length > 0 && (
+        <BoardInfo rows={rows} cols={cols} snake={snake} board={board} />
+      )}
+      <StartGame gamePaused={gamePaused} handlePauseGame={handlePauseGame} />
+      {board && <GameBoard board={board} />}
     </div>
   );
 }

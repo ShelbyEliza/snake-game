@@ -1,13 +1,11 @@
-const UpdateBoard = (board, snakeHead) => {
+const UpdateBoard = ({ board, snakeHead }) => {
   // useEffect(() => {
   //   board.length > 0 && GenerateFood(board, totalCells);
 
   //   snakeHead && setBoard(UpdateBoard(board, snakeHead));
   // }, [snakeHead, snake]);
-  let updatedBoard = board;
-  console.log("hellooooo");
 
-  updatedBoard.map((cell) => {
+  const updatedBoard = board.map((cell) => {
     if (cell.row === snakeHead.row && cell.col === snakeHead.col) {
       cell.status = "isSnakeHead";
     }
