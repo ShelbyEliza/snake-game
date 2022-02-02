@@ -1,4 +1,9 @@
 const UpdateBoard = (board, snakeHead) => {
+  // useEffect(() => {
+  //   board.length > 0 && GenerateFood(board, totalCells);
+
+  //   snakeHead && setBoard(UpdateBoard(board, snakeHead));
+  // }, [snakeHead, snake]);
   let updatedBoard = board;
   console.log("hellooooo");
 

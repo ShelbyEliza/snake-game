@@ -1,23 +1,30 @@
 import TitleBar from "./TitleBar";
 import Cell from "./Cell";
-import GenerateFood from "./GenerateFood";
 import { useState, useEffect } from "react";
-import UpdateBoard from "./UpdateBoard";
+import BoardInfo from "./BoardInfo";
+// import GenerateFood from "./GenerateFood";
+// import UpdateBoard from "./UpdateBoard";
 
 function App() {
   const [rows, setRows] = useState(11);
   const [cols, setCols] = useState(11);
-  const [totalCells, setTotalCells] = useState(rows * rows);
-  const [midGrid, setMidGrid] = useState(Math.floor(totalCells / 2));
-  const [initialFood, setInitialFood] = useState(midGrid + rows + cols);
+  const [gamePaused, setGamePaused] = useState(true);
+
   const [board, setBoard] = useState([]);
-  const [status, setStatus] = useState("notSnake");
   const [snake, setSnake] = useState([]);
   const [snakeHead, setSnakeHead] = useState();
-  const [direction, setDirection] = useState("down");
 
-  const buildBoard = () => {
+  const [time, setTime] = useState(0);
+  // const [direction, setDirection] = useState("down");
+
+  useEffect(() => {
+    const totalCells = rows * rows;
+    const midGrid = Math.floor(totalCells / 2);
+    const initialFood = midGrid + rows + rows;
+
     let grid = [];
+    let status = "notSnake";
+    let id = 0;
 
     for (let row = 0; row < rows; row++) {
       for (let col = 0; col < cols; col++) {
@@ -25,49 +32,55 @@ function App() {
           row,
           col,
           status,
+          id,
         });
+        id++;
       }
     }
-
     grid[midGrid].status = "isSnake";
     grid[initialFood].status = "isFood";
-
     setBoard(grid);
     console.log("Board Built");
-  };
+  }, [rows, cols]);
 
-  const addToSnake = () => {
-    let snakeArray = board.filter(
-      (cell) => cell.status === "isSnake" || cell.status === "snakeHead"
-    );
-
+  const buildSnake = () => {
+    let snakeArray = board.filter((cell) => cell.status === "isSnake");
     setSnake(snakeArray);
-    setSnakeHead(snakeArray[0]);
   };
 
-  // const moveSnake = () => {
-  //   setSnakeHead(snake[0]);
-  //   console.log(snakeHead);
-  //   // console.log(board);
-  // };
+  useEffect(() => {
+    buildSnake();
+  }, [board]);
 
   useEffect(() => {
-    buildBoard();
-  }, []);
+    if (snake.length > 0) {
+      console.log(snake);
+      setSnakeHead(snake[0]);
+    }
+  }, [snake]);
 
   useEffect(() => {
-    addToSnake();
-  }, []);
-
-  useEffect(() => {
-    board.length > 0 && GenerateFood(board, totalCells);
-
-    snakeHead && setBoard(UpdateBoard(board, snakeHead));
-  }, [snakeHead, snake]);
+    if (gamePaused === false) {
+      setInterval(() => {
+        setTime((t) => t + 1);
+        // console.log(time);
+      }, 3000);
+      return () => clearInterval();
+    }
+  }, [gamePaused]);
 
   return (
     <div className="App">
       <TitleBar></TitleBar>
+      <div className="start-game">
+        {gamePaused && (
+          <button onClick={() => setGamePaused(false)}>Start Game!</button>
+        )}
+        {!gamePaused && (
+          <button onClick={() => setGamePaused(true)}>Stop Game!</button>
+        )}
+      </div>
+      {snake.length > 0 && <BoardInfo snake={snake} />}
       <div className="content">
         {board && (
           <div className="game-board">
