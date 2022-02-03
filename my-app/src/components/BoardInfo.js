@@ -16,16 +16,16 @@ const BoardInfo = ({ rows, cols, snake, board }) => {
   return (
     <div className="BoardInfo">
       <div className="board-data">
-        Board: {rows}x{cols}
+        Board: {rows} x {cols}
       </div>
       {snakeCell && (
         <div className="board-data">
-          Snake: {snakeCell.row}, {snakeCell.col}
+          Snake: {snakeCell.row} - {snakeCell.col}
         </div>
       )}
       {foodCell && (
         <div className="board-data">
-          Food: {foodCell.row}, {foodCell.col}
+          Food: {foodCell.row} - {foodCell.col}
         </div>
       )}
     </div>

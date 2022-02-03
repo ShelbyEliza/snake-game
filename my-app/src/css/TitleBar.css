@@ -14,7 +14,8 @@
 
   background: rgb(61, 24, 121);
 
-  border-bottom: 2px solid rgb(41, 15, 82);
+  /* border-bottom: 2px solid rgb(41, 15, 82); */
   border-top: 2px solid rgb(41, 15, 82);
-  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }

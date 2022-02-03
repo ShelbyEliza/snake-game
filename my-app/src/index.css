@@ -7,7 +7,7 @@
   font-family: "Quicksand";
 }
 body {
-  background: rgb(63, 53, 78);
+  background: rgb(32, 6, 73);
 }
 
 label {
@@ -21,15 +21,7 @@ form {
   align-items: center;
 }
 
-.gameBoard-title {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  margin-bottom: 10px;
-
-  padding: 10px;
-
-  color: floralwhite;
-  border: 1px solid #f2f2f2;
-}
+/* .game-backdrop {
+  background: rgb(61, 24, 121);
+  margin: auto;
+} */

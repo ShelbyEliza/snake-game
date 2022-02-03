@@ -8,7 +8,10 @@ const Cell = ({ cell, status }) => {
   return (
     <div className="Cell">
       <div className={status}>
-        {cellRow.toString() + "-" + cellCol.toString()}
+        <p className="cellRow">
+          {/* {cellRow.toString()} - {cellCol.toString()} */}
+        </p>
+        {/* {cellRow.toString() + " - " + cellCol.toString()} */}
       </div>
     </div>
   );

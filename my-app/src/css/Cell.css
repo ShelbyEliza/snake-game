@@ -8,10 +8,12 @@
   height: 60px;
 
   font-size: 18px;
-  color: black;
+  color: rgb(63, 224, 157);
   white-space: nowrap;
 
-  outline: 1px solid rgb(110, 93, 136);
+  background: rgb(84, 13, 199);
+
+  outline: 1px solid rgb(41, 2, 100);
 }
 
 .isFood {
@@ -23,11 +25,11 @@
   padding: 4px;
 
   border-radius: 50%;
-  background: rgb(71, 80, 160);
+  background: rgb(10, 167, 4);
 }
 
 .isSnake {
-  display: inline-block;
+  display: flex;
 
   width: 20px;
   height: 20px;
@@ -36,7 +38,7 @@
 
   border-radius: 50%;
 
-  background: rgb(114, 53, 99);
+  background: rgb(177, 6, 134);
 }
 
 .isSnakeHead {
@@ -49,5 +51,5 @@
 
   border-radius: 50%;
 
-  background: rgb(63, 224, 157);
+  background: rgb(6, 231, 137);
 }
