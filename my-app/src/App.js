@@ -1,37 +1,34 @@
-import TitleBar from "./components/TitleBar";
 import { useState, useEffect } from "react";
+import TitleBar from "./components/TitleBar";
+import StartGame from "./components/StartGame";
 import BoardInfo from "./components/BoardInfo";
 import GameBoard from "./components/GameBoard";
-import StartGame from "./components/StartGame";
 
 // import GenerateFood from "./components/GenerateFood";
 // import UpdateBoard from "./components/UpdateBoard";
 
-// const rows = 11;
-// const cols = 11;
-
 function App() {
+  console.log("App.js is rendering");
+
   const [rows, setRows] = useState();
   const [cols, setCols] = useState();
-  // const [isSelected, setIsSelected] = useState(false);
+  const [board, setBoard] = useState([]);
+
   const [gamePaused, setGamePaused] = useState(true);
   const [time, setTime] = useState(0);
 
-  const [board, setBoard] = useState([]);
-  const [snake, setSnake] = useState([]);
+  // const [snake, setSnake] = useState([]);
 
-  const [snakeHead, setSnakeHead] = useState();
+  // const [snakeHead, setSnakeHead] = useState();
 
   let count;
-  let size = 0;
 
   useEffect(() => {
-    console.log(rows);
     if (rows !== 0 && rows !== undefined) {
+      console.log(rows);
       const totalCells = rows * rows;
       const midGrid = Math.floor(totalCells / 2);
       const initialFood = midGrid + rows + rows;
-      size = rows * 60;
 
       let grid = [];
       let status = "notSnake";
@@ -51,50 +48,50 @@ function App() {
       grid[midGrid].status = "isSnake";
       grid[initialFood].status = "isFood";
       setBoard(grid);
-      console.log("Board Built");
+      // console.log("Board Built");
     }
   }, [rows, cols]);
 
-  const buildSnake = () => {
-    let snakeArray = board.filter((cell) => cell.status === "isSnake");
-    setSnake(snakeArray);
-  };
+  // const buildSnake = () => {
+  //   let snakeArray = board.filter((cell) => cell.status === "isSnake");
+  //   setSnake(snakeArray);
+  // };
 
-  useEffect(() => {
-    buildSnake();
-  }, [board]);
+  // useEffect(() => {
+  //   buildSnake();
+  // }, [board]);
 
-  useEffect(() => {
-    if (snake.length > 0) {
-      setSnakeHead(snake[0]);
-    }
-  }, [snake]);
+  // useEffect(() => {
+  //   if (snake.length > 0) {
+  //     setSnakeHead(snake[0]);
+  //   }
+  // }, [snake]);
 
-  useEffect(() => {
-    if (gamePaused === false) {
-      setInterval(() => {
-        console.log(count);
-        count++;
-      }, 3000);
-    }
-    if (gamePaused === true) {
-      clearInterval();
-    }
-  }, [gamePaused, count]);
+  // useEffect(() => {
+  //   if (gamePaused === false) {
+  //     setInterval(() => {
+  //       // console.log(count);
+  //       count++;
+  //     }, 3000);
+  //   }
+  //   if (gamePaused === true) {
+  //     clearInterval();
+  //   }
+  // }, [gamePaused, count]);
 
-  const handlePauseGame = () => {
-    if (gamePaused === true) {
-      console.log("Starting");
-      setGamePaused(false);
-    } else {
-      console.log("Pausing");
-      setGamePaused(true);
-    }
-  };
+  // const handlePauseGame = () => {
+  //   if (gamePaused === true) {
+  //     // console.log("Starting");
+  //     setGamePaused(false);
+  //   } else {
+  //     // console.log("Pausing");
+  //     setGamePaused(true);
+  //   }
+  // };
 
   const handleBoardChange = (size) => {
     let target = parseInt(size);
-    console.log(target);
+    // console.log(target);
 
     setRows(target);
     setCols(target);
@@ -105,15 +102,13 @@ function App() {
     <div className="App">
       <TitleBar></TitleBar>
       <StartGame
-        gamePaused={gamePaused}
-        handlePauseGame={handlePauseGame}
+        // gamePaused={gamePaused}
+        // handlePauseGame={handlePauseGame}
         handleBoardChange={handleBoardChange}
       />
       {/* <div className="game-backdrop"> */}
-      {snake.length > 0 && (
-        <BoardInfo rows={rows} cols={cols} snake={snake} board={board} />
-      )}
-      {rows !== 0 && <GameBoard board={board} rows={rows} />}
+      {board.length > 0 && <BoardInfo rows={rows} cols={cols} board={board} />}
+      {rows && <GameBoard board={board} rows={rows} />}
       {/* </div> */}
     </div>
   );

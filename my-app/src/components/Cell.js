@@ -2,6 +2,7 @@ import "../css/Cell.css";
 import { useState } from "react";
 
 const Cell = ({ cell, status }) => {
+  console.log("Cell.js is rendering");
   const [cellRow, setCellRow] = useState(cell.row);
   const [cellCol, setCellCol] = useState(cell.col);
 

@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 
 const StartGame = ({ gamePaused, handlePauseGame, handleBoardChange }) => {
   const [selection, setSelection] = useState(0);
-  // console.log(gamePaused);
+  console.log("StartGame.js is rendering");
   useEffect(() => {
-    console.log(selection);
+    // console.log(selection);
     handleBoardChange(selection);
   }, [selection, handleBoardChange]);
 
@@ -15,7 +15,6 @@ const StartGame = ({ gamePaused, handlePauseGame, handleBoardChange }) => {
         <label>GameBoard Size:</label>
         <select
           className="row-col-selection"
-          value={0}
           onChange={(e) => setSelection(e.target.value)}
         >
           <option value={0}></option>
