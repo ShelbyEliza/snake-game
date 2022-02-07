@@ -13,19 +13,13 @@ function App() {
   const [rows, setRows] = useState();
   const [cols, setCols] = useState();
   const [board, setBoard] = useState([]);
-
-  const [gamePaused, setGamePaused] = useState(true);
-  const [time, setTime] = useState(0);
+  const [isGamePaused, setIsGamePaused] = useState(true);
 
   // const [snake, setSnake] = useState([]);
-
   // const [snakeHead, setSnakeHead] = useState();
-
-  let count;
 
   useEffect(() => {
     if (rows !== 0 && rows !== undefined) {
-      console.log(rows);
       const totalCells = rows * rows;
       const midGrid = Math.floor(totalCells / 2);
       const initialFood = midGrid + rows + rows;
@@ -48,9 +42,26 @@ function App() {
       grid[midGrid].status = "isSnake";
       grid[initialFood].status = "isFood";
       setBoard(grid);
-      // console.log("Board Built");
+      console.log("Board Built");
     }
   }, [rows, cols]);
+
+  const handleBoardChange = (size) => {
+    let target = parseInt(size);
+    // console.log(target);
+
+    setRows(target);
+    setCols(target);
+    // setIsSelected(true);
+  };
+  const handlePause = () => {
+    if (isGamePaused) {
+      setIsGamePaused(false);
+    }
+    if (isGamePaused === false) {
+      setIsGamePaused(true);
+    }
+  };
 
   // const buildSnake = () => {
   //   let snakeArray = board.filter((cell) => cell.status === "isSnake");
@@ -67,49 +78,24 @@ function App() {
   //   }
   // }, [snake]);
 
-  // useEffect(() => {
-  //   if (gamePaused === false) {
-  //     setInterval(() => {
-  //       // console.log(count);
-  //       count++;
-  //     }, 3000);
-  //   }
-  //   if (gamePaused === true) {
-  //     clearInterval();
-  //   }
-  // }, [gamePaused, count]);
-
-  // const handlePauseGame = () => {
-  //   if (gamePaused === true) {
-  //     // console.log("Starting");
-  //     setGamePaused(false);
-  //   } else {
-  //     // console.log("Pausing");
-  //     setGamePaused(true);
-  //   }
-  // };
-
-  const handleBoardChange = (size) => {
-    let target = parseInt(size);
-    // console.log(target);
-
-    setRows(target);
-    setCols(target);
-    // setIsSelected(true);
-  };
-
   return (
     <div className="App">
-      <TitleBar></TitleBar>
       <StartGame
-        // gamePaused={gamePaused}
-        // handlePauseGame={handlePauseGame}
         handleBoardChange={handleBoardChange}
+        isGamePaused={isGamePaused}
+        handlePause={handlePause}
       />
-      {/* <div className="game-backdrop"> */}
-      {board.length > 0 && <BoardInfo rows={rows} cols={cols} board={board} />}
-      {rows && <GameBoard board={board} rows={rows} />}
-      {/* </div> */}
+      {board.length > 0 && (
+        <BoardInfo
+          rows={rows}
+          cols={cols}
+          board={board}
+          isGamePaused={isGamePaused}
+        />
+      )}
+      {rows && (
+        <GameBoard board={board} rows={rows} isGamePaused={isGamePaused} />
+      )}
     </div>
   );
 }

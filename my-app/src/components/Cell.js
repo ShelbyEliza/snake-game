@@ -1,14 +1,14 @@
 import "../css/Cell.css";
 import { useState } from "react";
 
-const Cell = ({ cell, status }) => {
-  console.log("Cell.js is rendering");
+const Cell = ({ cell }) => {
+  // console.log("Cell.js is rendering");
   const [cellRow, setCellRow] = useState(cell.row);
   const [cellCol, setCellCol] = useState(cell.col);
 
   return (
     <div className="Cell">
-      <div className={status}>
+      <div className={cell.status}>
         <p className="cellRow">
           {/* {cellRow.toString()} - {cellCol.toString()} */}
         </p>
