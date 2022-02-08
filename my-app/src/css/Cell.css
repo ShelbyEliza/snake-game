@@ -25,7 +25,8 @@
   padding: 4px;
 
   border-radius: 50%;
-  background: rgb(10, 167, 4);
+  background: rgba(6, 231, 137, 0.507);
+  border: 1px solid rgb(25, 161, 104);
 }
 
 .isSnake {
@@ -38,7 +39,8 @@
 
   border-radius: 50%;
 
-  background: rgb(177, 6, 134);
+  background: rgba(177, 6, 134, 0.548);
+  border: 1px solid rgba(177, 6, 134);
 }
 
 .isSnakeHead {
@@ -51,7 +53,8 @@
 
   border-radius: 50%;
 
-  background: rgb(6, 231, 137);
+  background: rgba(6, 231, 137, 0.507);
+  border: 1px solid rgb(6, 231, 137);
 }
 .aroundHead {
   display: inline-block;
@@ -63,5 +66,6 @@
 
   border-radius: 50%;
 
-  background: rgb(185, 202, 26);
+  background: rgba(51, 8, 119, 0.192);
+  border: 1px solid rgba(50, 8, 119);
 }
