@@ -1,11 +1,7 @@
 import { useState, useEffect } from "react";
-import TitleBar from "./components/TitleBar";
 import StartGame from "./components/StartGame";
 import BoardInfo from "./components/BoardInfo";
 import GameBoard from "./components/GameBoard";
-
-// import GenerateFood from "./components/GenerateFood";
-// import UpdateBoard from "./components/UpdateBoard";
 
 function App() {
   console.log("App.js is rendering");
@@ -14,9 +10,6 @@ function App() {
   const [cols, setCols] = useState();
   const [board, setBoard] = useState([]);
   const [isGamePaused, setIsGamePaused] = useState(true);
-
-  // const [snake, setSnake] = useState([]);
-  // const [snakeHead, setSnakeHead] = useState();
 
   useEffect(() => {
     if (rows !== 0 && rows !== undefined) {
@@ -48,11 +41,9 @@ function App() {
 
   const handleBoardChange = (size) => {
     let target = parseInt(size);
-    // console.log(target);
 
     setRows(target);
     setCols(target);
-    // setIsSelected(true);
   };
   const handlePause = () => {
     if (isGamePaused) {
@@ -62,21 +53,6 @@ function App() {
       setIsGamePaused(true);
     }
   };
-
-  // const buildSnake = () => {
-  //   let snakeArray = board.filter((cell) => cell.status === "isSnake");
-  //   setSnake(snakeArray);
-  // };
-
-  // useEffect(() => {
-  //   buildSnake();
-  // }, [board]);
-
-  // useEffect(() => {
-  //   if (snake.length > 0) {
-  //     setSnakeHead(snake[0]);
-  //   }
-  // }, [snake]);
 
   return (
     <div className="App">

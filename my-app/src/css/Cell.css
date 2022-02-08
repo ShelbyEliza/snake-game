@@ -53,3 +53,15 @@
 
   background: rgb(6, 231, 137);
 }
+.aroundHead {
+  display: inline-block;
+
+  width: 20px;
+  height: 20px;
+
+  padding: 6px;
+
+  border-radius: 50%;
+
+  background: rgb(185, 202, 26);
+}
