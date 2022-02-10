@@ -1,73 +1,98 @@
-import Cell from "./Cell";
+import { useState, useEffect, useRef } from "react";
 import "../css/GameBoard.css";
-import { useCell } from "../hooks/useCell";
-// import { useTimer } from "../hooks/useTimer";
-import { useTempHooks } from "../hooks/useTempHooks";
 
-const GameBoard = ({ board, rows, isGamePaused }) => {
-  console.log("GameBoard.js is rendering");
-  const { cellArray } = useTempHooks(isGamePaused, board, rows);
-  const { cells, snakes, snakeHead, mutableCells, timer } = useCell(
-    isGamePaused,
-    board,
-    rows
-  );
-  const size = rows * 60;
+import Cell from "./Cell";
 
-  if (timer) {
-    console.log(snakeHead, snakes, mutableCells, timer);
-  }
+import { useTimer } from "../hooks/useTimer";
+
+const GameBoard = ({ board, rows, isGamePaused, initialHeadPosition }) => {
+  const [size, setSize] = useState();
+  const { timer } = useTimer(isGamePaused);
+  const [cells, setCells] = useState();
+  const [direction, setDirection] = useState({});
+  const headRef = useRef(initialHeadPosition);
+  const cellsArrayRef = useRef(board);
+
+  useEffect(() => {
+    if (board && board !== 0) {
+      cellsArrayRef.current = board;
+      headRef.current = initialHeadPosition;
+
+      let tempDirection = {
+        up: headRef.current.id - rows,
+        right: headRef.current.id + 1,
+        down: headRef.current.id + rows,
+        left: headRef.current.id - 1,
+      };
+      setDirection(tempDirection);
+      setSize(rows * 60);
+      setCells(board);
+    }
+  }, [board, rows, initialHeadPosition]);
+
+  useEffect(() => {
+    if (timer) {
+      console.log(timer, cellsArrayRef.current, headRef.current);
+      let newHeadRef;
+      console.log(
+        timer,
+        direction.up,
+        direction.right,
+        direction.down,
+        direction.left
+      );
+      let cellsArray = cellsArrayRef.current.map((cell) => {
+        if (cell.id === headRef.current.id) {
+          // if (headRef.current.id + rows + rows > cellsArrayRef.length - 1) {
+
+          // }
+          return { ...cell, status: "notSnake" };
+        }
+        if (cell.id === headRef.current.id + rows) {
+          newHeadRef = cell;
+          return { ...cell, status: "isSnake" };
+        } else {
+          return cell;
+        }
+      });
+      cellsArrayRef.current = cellsArray;
+      headRef.current = newHeadRef;
+      setCells(cellsArray);
+    }
+  }, [timer, rows, initialHeadPosition, direction]);
+
   return (
-    <div>
-      <div
-        className="GameBoard"
-        style={{
-          width: `${size}px`,
-          height: `${size}px`,
-        }}
-      >
-        {cellArray
-          ? cellArray.map((cell) => (
-              <Cell
-                key={cell.row.toString() + "-" + cell.col.toString()}
-                cell={cell}
-                isGamePaused={isGamePaused}
-                board={board}
-              ></Cell>
-            ))
-          : board.map((cell) => (
-              <Cell
-                key={cell.row.toString() + "-" + cell.col.toString()}
-                cell={cell}
-                isGamePaused={isGamePaused}
-                board={board}
-              ></Cell>
-            ))}
-        {/* {mutableCells
-          ? mutableCells.map((cell) => (
-              <Cell
-                key={cell.row.toString() + "-" + cell.col.toString()}
-                cell={cell}
-                isGamePaused={isGamePaused}
-                board={board}
-              ></Cell>
-            ))
-          : board.map((cell) => (
-              <Cell
-                key={cell.row.toString() + "-" + cell.col.toString()}
-                cell={cell}
-                isGamePaused={isGamePaused}
-                board={board}
-              ></Cell>
-            ))} */}
-      </div>
-      {/* {snakeHeads && (
-        <div>
-          <h1>{cells[0].status.toString()}</h1>
-          <h1>{snakes[0].toString()}</h1>
-          <h1>{snakeHeads.toString()}</h1>
-        </div>
-      )} */}
+    <div
+      className="GameBoard"
+      style={{
+        width: `${size}px`,
+        height: `${size}px`,
+      }}
+    >
+      {/* {board.map((cell) => (
+          <Cell
+            key={cell.row.toString() + "-" + cell.col.toString()}
+            cell={cell}
+            isGamePaused={isGamePaused}
+            board={board}
+          ></Cell>
+        ))} */}
+      {cells
+        ? cells.map((cell) => (
+            <Cell
+              key={cell.row.toString() + "-" + cell.col.toString()}
+              cell={cell}
+              cellsArrayRef={cellsArrayRef}
+            ></Cell>
+          ))
+        : board.map((cell) => (
+            <Cell
+              key={cell.row.toString() + "-" + cell.col.toString()}
+              cell={cell}
+              isGamePaused={isGamePaused}
+              board={board}
+            ></Cell>
+          ))}
     </div>
   );
 };

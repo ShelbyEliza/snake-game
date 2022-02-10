@@ -8,8 +8,9 @@
   margin: auto;
   /* padding: 10px 20px 20px 20px; */
 
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  /* border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px; */
 
   /* background: rgb(61, 24, 121); */
+  border: 3px solid salmon;
 }

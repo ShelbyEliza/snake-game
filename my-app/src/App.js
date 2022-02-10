@@ -4,12 +4,13 @@ import BoardInfo from "./components/BoardInfo";
 import GameBoard from "./components/GameBoard";
 
 function App() {
-  console.log("App.js is rendering");
+  // console.log("App.js is rendering");
 
   const [rows, setRows] = useState();
   const [cols, setCols] = useState();
   const [board, setBoard] = useState([]);
   const [isGamePaused, setIsGamePaused] = useState(true);
+  const [initialHeadPosition, setInitialHeadPosition] = useState();
 
   useEffect(() => {
     if (rows !== 0 && rows !== undefined) {
@@ -34,6 +35,8 @@ function App() {
       }
       grid[midGrid].status = "isSnake";
       grid[initialFood].status = "isFood";
+
+      setInitialHeadPosition(grid[midGrid]);
       setBoard(grid);
       console.log("Board Built");
     }
@@ -61,16 +64,14 @@ function App() {
         isGamePaused={isGamePaused}
         handlePause={handlePause}
       />
-      {board.length > 0 && (
-        <BoardInfo
-          rows={rows}
-          cols={cols}
+      {board.length > 0 && <BoardInfo rows={rows} cols={cols} board={board} />}
+      {initialHeadPosition && board && (
+        <GameBoard
           board={board}
+          rows={rows}
           isGamePaused={isGamePaused}
+          initialHeadPosition={initialHeadPosition}
         />
-      )}
-      {rows && (
-        <GameBoard board={board} rows={rows} isGamePaused={isGamePaused} />
       )}
     </div>
   );

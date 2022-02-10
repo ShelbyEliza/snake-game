@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 const StartGame = ({ handleBoardChange, isGamePaused, handlePause }) => {
   const [selection, setSelection] = useState(0);
 
-  console.log("StartGame.js is rendering");
+  // console.log("StartGame.js is rendering");
 
   useEffect(() => {
     handleBoardChange(selection);
