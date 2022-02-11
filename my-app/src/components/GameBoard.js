@@ -2,64 +2,53 @@ import { useState, useEffect, useRef } from "react";
 import "../css/GameBoard.css";
 
 import Cell from "./Cell";
+import MoveDown from "./MoveDown";
+import MoveUp from "./MoveUp";
 
 import { useTimer } from "../hooks/useTimer";
 
 const GameBoard = ({ board, rows, isGamePaused, initialHeadPosition }) => {
   const [size, setSize] = useState();
-  const { timer } = useTimer(isGamePaused);
+  const [length, setLength] = useState();
   const [cells, setCells] = useState();
-  const [direction, setDirection] = useState({});
+
+  const { timer } = useTimer(isGamePaused);
   const headRef = useRef(initialHeadPosition);
-  const cellsArrayRef = useRef(board);
+  const cellsRef = useRef(board);
 
   useEffect(() => {
     if (board && board !== 0) {
-      cellsArrayRef.current = board;
+      cellsRef.current = board;
       headRef.current = initialHeadPosition;
 
-      let tempDirection = {
-        up: headRef.current.id - rows,
-        right: headRef.current.id + 1,
-        down: headRef.current.id + rows,
-        left: headRef.current.id - 1,
-      };
-      setDirection(tempDirection);
+      setLength(board.length);
       setSize(rows * 60);
       setCells(board);
     }
-  }, [board, rows, initialHeadPosition]);
+  }, [board, rows, length, initialHeadPosition]);
 
   useEffect(() => {
     if (timer) {
-      console.log(timer, cellsArrayRef.current, headRef.current);
-      let newHeadRef;
-      console.log(
-        timer,
-        direction.up,
-        direction.right,
-        direction.down,
-        direction.left
-      );
-      let cellsArray = cellsArrayRef.current.map((cell) => {
-        if (cell.id === headRef.current.id) {
-          // if (headRef.current.id + rows + rows > cellsArrayRef.length - 1) {
+      // let newHead = MoveDown(headRef.current.id, rows, length);
+      let newHead = MoveUp(headRef.current.id, rows, length);
 
-          // }
+      let cellsArray = cellsRef.current.map((cell) => {
+        if (cell.id === headRef.current.id) {
           return { ...cell, status: "notSnake" };
         }
-        if (cell.id === headRef.current.id + rows) {
-          newHeadRef = cell;
+        if (cell.id === newHead) {
+          newHead = cell;
           return { ...cell, status: "isSnake" };
         } else {
           return cell;
         }
       });
-      cellsArrayRef.current = cellsArray;
-      headRef.current = newHeadRef;
+      cellsRef.current = cellsArray;
+      headRef.current = newHead;
       setCells(cellsArray);
+      // console.log(timer, headRef.current, cellsRef);
     }
-  }, [timer, rows, initialHeadPosition, direction]);
+  }, [timer, rows, initialHeadPosition, length]);
 
   return (
     <div
@@ -69,20 +58,12 @@ const GameBoard = ({ board, rows, isGamePaused, initialHeadPosition }) => {
         height: `${size}px`,
       }}
     >
-      {/* {board.map((cell) => (
-          <Cell
-            key={cell.row.toString() + "-" + cell.col.toString()}
-            cell={cell}
-            isGamePaused={isGamePaused}
-            board={board}
-          ></Cell>
-        ))} */}
       {cells
         ? cells.map((cell) => (
             <Cell
               key={cell.row.toString() + "-" + cell.col.toString()}
               cell={cell}
-              cellsArrayRef={cellsArrayRef}
+              // cellsRef={cellsRef}
             ></Cell>
           ))
         : board.map((cell) => (

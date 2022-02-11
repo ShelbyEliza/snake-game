@@ -5,7 +5,7 @@ const Cell = ({ cell }) => {
 
   return (
     <div className="Cell">
-      <div className={cell.status}></div>
+      <div className={cell.status}>{cell.id}</div>
     </div>
   );
 };

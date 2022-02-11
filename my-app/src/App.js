@@ -20,10 +20,10 @@ function App() {
 
       let grid = [];
       let status = "notSnake";
-      let id = 0;
+      let id = 1;
 
-      for (let row = 0; row < rows; row++) {
-        for (let col = 0; col < cols; col++) {
+      for (let row = 1; row < rows + 1; row++) {
+        for (let col = 1; col < cols + 1; col++) {
           grid.push({
             row,
             col,
