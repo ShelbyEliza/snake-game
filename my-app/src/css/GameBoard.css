@@ -14,3 +14,7 @@
   /* background: rgb(61, 24, 121); */
   border: 3px solid salmon;
 }
+.direction {
+  display: flex;
+  margin: 20px auto;
+}

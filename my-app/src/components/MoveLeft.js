@@ -1,0 +1,14 @@
+const MoveLeft = (headID, rows) => {
+  const moveToEnd = headID + (rows - 1);
+  // console.log(headID);
+
+  if (moveToEnd % rows !== 0) {
+    // console.log("Going Left");
+    return headID - 1;
+  } else {
+    // console.log("To the End of Row");
+    return moveToEnd;
+  }
+};
+
+export default MoveLeft;
