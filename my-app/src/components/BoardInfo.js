@@ -7,7 +7,7 @@ const BoardInfo = ({ rows, cols, board }) => {
   let foodCell;
 
   board.forEach((cell) => {
-    if (cell.status === "isSnake") {
+    if (cell.status === "isSnakeHead") {
       snakeCell = cell;
     }
     if (cell.status === "isFood") {

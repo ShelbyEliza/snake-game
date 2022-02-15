@@ -10,7 +10,7 @@ export const useTimer = (isGamePaused) => {
     if (!isGamePaused) {
       const id = setInterval(() => {
         setTimer((c) => c + 1);
-      }, 3000);
+      }, 1500);
       return () => clearInterval(id);
     }
   }, [timer, isGamePaused]);

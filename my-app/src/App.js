@@ -10,7 +10,8 @@ function App() {
   const [cols, setCols] = useState();
   const [board, setBoard] = useState([]);
   const [isGamePaused, setIsGamePaused] = useState(true);
-  const [initialHeadPosition, setInitialHeadPosition] = useState();
+  const [initialHead, setInitialHead] = useState();
+  const [initialFood, setInitialFood] = useState();
 
   useEffect(() => {
     if (rows !== 0 && rows !== undefined) {
@@ -33,10 +34,11 @@ function App() {
           id++;
         }
       }
-      grid[midGrid].status = "isSnake";
+      grid[midGrid].status = "isSnakeHead";
       grid[initialFood].status = "isFood";
 
-      setInitialHeadPosition(grid[midGrid]);
+      setInitialHead(grid[midGrid]);
+      setInitialFood(grid[initialFood]);
       setBoard(grid);
       console.log("Board Built");
     }
@@ -65,12 +67,13 @@ function App() {
         handlePause={handlePause}
       />
       {board.length > 0 && <BoardInfo rows={rows} cols={cols} board={board} />}
-      {initialHeadPosition && board && (
+      {initialHead && board && (
         <GameBoard
           board={board}
           rows={rows}
           isGamePaused={isGamePaused}
-          initialHeadPosition={initialHeadPosition}
+          initialHead={initialHead}
+          initialFood={initialFood}
         />
       )}
     </div>

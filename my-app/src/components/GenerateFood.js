@@ -1,16 +1,13 @@
-const GenerateFood = (board, totalCells) => {
-  // console.log(board);
-  // let randomCell = board[Math.floor(Math.random() * totalCells)];
+const GenerateFood = (cells, length) => {
+  // console.log("Food is Generating");
+  let randomCell = cells[Math.floor(Math.random() * length)];
 
-  // while (randomCell.status !== "notSnake") {
-  //   randomCell = board[Math.floor(Math.random() * totalCells)];
-  // }
-  // return randomCell;
-  return (
-    <div>
-      <h1>Hello</h1>
-    </div>
-  );
+  while (randomCell.status !== "notSnake") {
+    randomCell = cells[Math.floor(Math.random() * length)];
+  }
+  // console.log(randomCell.status);
+  randomCell.status = "isFood";
+  return randomCell;
 };
 
 export default GenerateFood;

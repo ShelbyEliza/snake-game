@@ -1,104 +1,98 @@
-import { useState, useEffect, useRef } from "react";
 import "../css/GameBoard.css";
 
-import Cell from "./Cell";
-import MoveUp from "./MoveUp";
-// import MoveRight from "./MoveRight";
-import MoveDown from "./MoveDown";
-// import MoveLeft from "./MoveLeft";
-import ControlDirection from "./ControlDirection";
-
+import { useState, useEffect, useRef } from "react";
 import { useTimer } from "../hooks/useTimer";
 
-const GameBoard = ({ board, rows, isGamePaused, initialHeadPosition }) => {
+import Cell from "./Cell";
+import ControlDirection from "./ControlDirection";
+import GenerateFood from "./GenerateFood";
+import ModifySnakeBody from "./ModifySnakeBody";
+
+const GameBoard = ({ board, rows, isGamePaused, initialHead, initialFood }) => {
+  const { timer } = useTimer(isGamePaused);
+  const controller = useRef(null);
+  const [inputDirection, setInputDirection] = useState(null);
   const [size, setSize] = useState();
   const [length, setLength] = useState();
   const [cells, setCells] = useState();
+  // const [snakeBody, setSnakeBody] = useState([]);
 
-  const { timer } = useTimer(isGamePaused);
-  const headRef = useRef(initialHeadPosition);
-  const cellsRef = useRef(board);
-  const controller = useRef(null);
-  const [inputDirection, setInputDirection] = useState(null);
-  const [toggleInput, setToggleInput] = useState();
+  const cellsRef = useRef();
+  const headRef = useRef();
+  const snakeBodyRef = useRef();
+  const foodRef = useRef();
 
+  // runs initially and when board changes:
   useEffect(() => {
     if (board && board !== 0) {
       cellsRef.current = board;
-      headRef.current = initialHeadPosition;
+      headRef.current = initialHead;
+      snakeBodyRef.current = [];
+      foodRef.current = initialFood;
 
       setLength(board.length);
       setSize(rows * 60);
       setCells(board);
+      // setSnakeBody([initialHead]);
     }
-  }, [board, rows, length, initialHeadPosition]);
+  }, [board, rows, length, initialHead, initialFood]);
 
-  const handleDirection = (e) => {
-    if (toggleInput) {
-      setToggleInput(false);
-    } else {
-      setToggleInput(true);
+  // focuses on input when game is not paused:
+  useEffect(() => {
+    if (!isGamePaused) {
+      controller.current.focus();
     }
+  }, [isGamePaused]);
+
+  // function logs whatever key was pressed:
+  const handleDirection = (e) => {
     setInputDirection(e.key);
   };
 
   useEffect(() => {
-    if (inputDirection) {
+    if (timer) {
+      const notFood = (cell) => cell.status !== "isFood";
       let newHead = ControlDirection(
         headRef.current.id,
         inputDirection,
         rows,
         length
       );
-      console.log(newHead);
+      snakeBodyRef.current.push(headRef.current);
+      let newBody = ModifySnakeBody(
+        snakeBodyRef.current,
+        inputDirection,
+        rows,
+        length,
+        headRef.current
+      );
+      console.log(newBody);
+
       let cellsArray = cellsRef.current.map((cell) => {
         if (cell.id === headRef.current.id) {
           return { ...cell, status: "notSnake" };
         }
         if (cell.id === newHead) {
           newHead = cell;
-          return { ...cell, status: "isSnake" };
+          return { ...cell, status: "isSnakeHead" };
         } else {
           return cell;
         }
       });
+
+      if (cellsArray.every(notFood)) {
+        foodRef.current = GenerateFood(cellsArray, length);
+        // ???
+        cellsArray[foodRef.current.id - 1] = foodRef.current;
+      }
       cellsRef.current = cellsArray;
       headRef.current = newHead;
       setCells(cellsArray);
+      // console.log(newHead, headRef.current);
+
+      // console.log(snakeBodyRef.current);
     }
-  }, [inputDirection, length, rows, toggleInput]);
-
-  // useEffect(() => {
-  //   let newHead;
-  //   if (timer) {
-  //     let newHead = MoveUp(headRef.current.id, rows, length);
-  //     // let newHead = MoveRight(headRef.current.id, rows, length);
-  //     // let newHead = MoveDown(headRef.current.id, rows, length);
-  //     // let newHead = MoveLeft(headRef.current.id, rows, length);
-
-  //     let cellsArray = cellsRef.current.map((cell) => {
-  //       if (cell.id === headRef.current.id) {
-  //         return { ...cell, status: "notSnake" };
-  //       }
-  //       if (cell.id === newHead) {
-  //         newHead = cell;
-  //         return { ...cell, status: "isSnake" };
-  //       } else {
-  //         return cell;
-  //       }
-  //     });
-  //     cellsRef.current = cellsArray;
-  //     headRef.current = newHead;
-  //     setCells(cellsArray);
-  //     // console.log(timer, headRef.current, cellsRef);
-  //   }
-  // }, [timer, rows, length, inputDirection]);
-
-  useEffect(() => {
-    if (!isGamePaused) {
-      controller.current.focus();
-    }
-  }, [isGamePaused]);
+  }, [timer, rows, length, inputDirection]);
 
   return (
     <>
@@ -114,7 +108,6 @@ const GameBoard = ({ board, rows, isGamePaused, initialHeadPosition }) => {
               <Cell
                 key={cell.row.toString() + "-" + cell.col.toString()}
                 cell={cell}
-                // cellsRef={cellsRef}
               ></Cell>
             ))
           : board.map((cell) => (
