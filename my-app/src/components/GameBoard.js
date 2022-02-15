@@ -15,12 +15,14 @@ const GameBoard = ({ board, rows, isGamePaused, initialHead, initialFood }) => {
   const [size, setSize] = useState();
   const [length, setLength] = useState();
   const [cells, setCells] = useState();
+  const [amountEaten, setAmountEaten] = useState();
   // const [snakeBody, setSnakeBody] = useState([]);
 
   const cellsRef = useRef();
   const headRef = useRef();
   const snakeBodyRef = useRef();
   const foodRef = useRef();
+  const amountEatenRef = useRef();
 
   // runs initially and when board changes:
   useEffect(() => {
@@ -29,10 +31,12 @@ const GameBoard = ({ board, rows, isGamePaused, initialHead, initialFood }) => {
       headRef.current = initialHead;
       snakeBodyRef.current = [];
       foodRef.current = initialFood;
+      amountEatenRef.current = 0;
 
       setLength(board.length);
       setSize(rows * 60);
       setCells(board);
+      setAmountEaten(0);
       // setSnakeBody([initialHead]);
     }
   }, [board, rows, length, initialHead, initialFood]);
@@ -52,27 +56,23 @@ const GameBoard = ({ board, rows, isGamePaused, initialHead, initialFood }) => {
   useEffect(() => {
     if (timer) {
       const notFood = (cell) => cell.status !== "isFood";
+      let wasFoodEaten = false;
       let newHead = ControlDirection(
         headRef.current.id,
         inputDirection,
         rows,
         length
       );
-      snakeBodyRef.current.push(headRef.current);
-      let newBody = ModifySnakeBody(
-        snakeBodyRef.current,
-        inputDirection,
-        rows,
-        length,
-        headRef.current
-      );
-      console.log(newBody);
 
       let cellsArray = cellsRef.current.map((cell) => {
         if (cell.id === headRef.current.id) {
           return { ...cell, status: "notSnake" };
         }
         if (cell.id === newHead) {
+          if (cell.status === "isFood") {
+            wasFoodEaten = true;
+            amountEatenRef.current++;
+          }
           newHead = cell;
           return { ...cell, status: "isSnakeHead" };
         } else {
@@ -85,6 +85,32 @@ const GameBoard = ({ board, rows, isGamePaused, initialHead, initialFood }) => {
         // ???
         cellsArray[foodRef.current.id - 1] = foodRef.current;
       }
+
+      let newBody = ModifySnakeBody(
+        snakeBodyRef.current,
+        newHead,
+        wasFoodEaten,
+        amountEatenRef.current,
+        cellsArray
+      );
+
+      // console.log(newBody);
+
+      // for (var i = 0; i < cellsArray.length; i++) {
+      //   for (var j = 0; j < newBody.length; j++) {
+      //     if (cellsArray[i].id === newBody[j].id) {
+      //       cellsArray[i].status = newBody[j].status;
+      //     } else {
+      //       if (
+      //         cellsArray[i].id !== newBody[j].id &&
+      //         cellsArray[i].status === "isSnake"
+      //       ) {
+      //         cellsArray[i].status = "notSnake";
+      //       }
+      //     }
+      //   }
+      // }
+
       cellsRef.current = cellsArray;
       headRef.current = newHead;
       setCells(cellsArray);

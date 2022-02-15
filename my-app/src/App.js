@@ -40,7 +40,7 @@ function App() {
       setInitialHead(grid[midGrid]);
       setInitialFood(grid[initialFood]);
       setBoard(grid);
-      console.log("Board Built");
+      // console.log("Board Built");
     }
   }, [rows, cols]);
 
