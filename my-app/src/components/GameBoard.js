@@ -2,42 +2,44 @@ import "../css/GameBoard.css";
 
 import { useState, useEffect, useRef } from "react";
 import { useTimer } from "../hooks/useTimer";
+import { useDirection } from "../hooks/useDirection";
 
 import Cell from "./Cell";
 import ControlDirection from "./ControlDirection";
 import GenerateFood from "./GenerateFood";
 import ModifySnakeBody from "./ModifySnakeBody";
+import BuildCells from "./BuildCells";
 
 const GameBoard = ({ board, rows, isGamePaused, initialHead, initialFood }) => {
   const { timer } = useTimer(isGamePaused);
   const controller = useRef(null);
-  const [inputDirection, setInputDirection] = useState(null);
+  const [inputDirection, setInputDirection] = useState("ArrowDown");
   const [size, setSize] = useState();
-  const [length, setLength] = useState();
+  const [length, setLength] = useState(board.length);
   const [cells, setCells] = useState();
-  const [amountEaten, setAmountEaten] = useState();
-  // const [snakeBody, setSnakeBody] = useState([]);
 
-  const cellsRef = useRef();
-  const headRef = useRef();
+  const inputRef = useRef("ArrowDown");
+  const cellsRef = useRef(board);
+  const prevHeadRef = useRef(initialHead);
   const snakeBodyRef = useRef();
   const foodRef = useRef();
-  const amountEatenRef = useRef();
+  const amountEatenRef = useRef(0);
+  // const { direction, count } = useDirection(isGamePaused, inputDirection, inputRef);
+  const notFood = (cell) => cell.status !== "isFood";
 
-  // runs initially and when board changes:
   useEffect(() => {
-    if (board && board !== 0) {
+    if (board) {
+      inputRef.current = "ArrowDown";
       cellsRef.current = board;
-      headRef.current = initialHead;
+      prevHeadRef.current = initialHead;
       snakeBodyRef.current = [];
       foodRef.current = initialFood;
       amountEatenRef.current = 0;
 
+      setInputDirection("ArrowDown");
       setLength(board.length);
       setSize(rows * 60);
       setCells(board);
-      setAmountEaten(0);
-      // setSnakeBody([initialHead]);
     }
   }, [board, rows, length, initialHead, initialFood]);
 
@@ -50,22 +52,23 @@ const GameBoard = ({ board, rows, isGamePaused, initialHead, initialFood }) => {
 
   // function logs whatever key was pressed:
   const handleDirection = (e) => {
-    setInputDirection(e.key);
+    if (inputDirection !== e.key) {
+      setInputDirection(e.key);
+    }
   };
 
   useEffect(() => {
     if (timer) {
-      const notFood = (cell) => cell.status !== "isFood";
       let wasFoodEaten = false;
       let newHead = ControlDirection(
-        headRef.current.id,
+        prevHeadRef.current,
         inputDirection,
         rows,
         length
       );
 
       let cellsArray = cellsRef.current.map((cell) => {
-        if (cell.id === headRef.current.id) {
+        if (cell.id === prevHeadRef.current.id) {
           return { ...cell, status: "notSnake" };
         }
         if (cell.id === newHead) {
@@ -73,8 +76,9 @@ const GameBoard = ({ board, rows, isGamePaused, initialHead, initialFood }) => {
             wasFoodEaten = true;
             amountEatenRef.current++;
           }
+          cell.status = "isSnakeHead";
           newHead = cell;
-          return { ...cell, status: "isSnakeHead" };
+          return cell;
         } else {
           return cell;
         }
@@ -82,7 +86,6 @@ const GameBoard = ({ board, rows, isGamePaused, initialHead, initialFood }) => {
 
       if (cellsArray.every(notFood)) {
         foodRef.current = GenerateFood(cellsArray, length);
-        // ???
         cellsArray[foodRef.current.id - 1] = foodRef.current;
       }
 
@@ -94,29 +97,41 @@ const GameBoard = ({ board, rows, isGamePaused, initialHead, initialFood }) => {
         cellsArray
       );
 
-      // console.log(newBody);
+      let ids = newBody.map((segment) => segment.id);
 
-      // for (var i = 0; i < cellsArray.length; i++) {
-      //   for (var j = 0; j < newBody.length; j++) {
-      //     if (cellsArray[i].id === newBody[j].id) {
-      //       cellsArray[i].status = newBody[j].status;
-      //     } else {
-      //       if (
-      //         cellsArray[i].id !== newBody[j].id &&
-      //         cellsArray[i].status === "isSnake"
-      //       ) {
-      //         cellsArray[i].status = "notSnake";
-      //       }
+      let matches = cellsArray.filter((cell) => {
+        return ids.includes(cell.id) && cell.status !== "isSnakeHead";
+      });
+      // console.log(matches);
+
+      let newCellsArray = cellsArray.map((cell) => {
+        if (matches.includes(cell)) {
+          return { ...cell, status: "isSnake" };
+        } else if (cell.status === "isSnake") {
+          return { ...cell, status: "notSnake" };
+        }
+
+        return cell;
+      });
+
+      cellsArray = newCellsArray;
+      // let newCellsArray = cellsArray.map((cell) => {
+      //   if (newBody.includes(cell.id)) {
+      //     if (newBody[cell.id - 1].status === "isSnakeHead") {
+      //       return { ...cell, status: "isSnakeHead" };
+      //     } else if (newBody[cell.id - 1].status === "isSnake") {
+      //       return { ...cell, status: "isSnake" };
       //     }
+      //   } else {
+      //     return cell;
       //   }
-      // }
+      // });
+      console.log(newBody);
+      console.log(newCellsArray);
 
       cellsRef.current = cellsArray;
-      headRef.current = newHead;
+      prevHeadRef.current = newHead;
       setCells(cellsArray);
-      // console.log(newHead, headRef.current);
-
-      // console.log(snakeBodyRef.current);
     }
   }, [timer, rows, length, inputDirection]);
 
@@ -145,12 +160,15 @@ const GameBoard = ({ board, rows, isGamePaused, initialHead, initialFood }) => {
               ></Cell>
             ))}
       </div>
-      <input
-        className="direction"
-        type="text"
-        onKeyUp={(e) => handleDirection(e)}
-        ref={controller}
-      />
+      <div>
+        <h2 className="score">{amountEatenRef.current}</h2>
+        <input
+          className="direction"
+          type="text"
+          onKeyUp={(e) => handleDirection(e)}
+          ref={controller}
+        />
+      </div>
     </>
   );
 };

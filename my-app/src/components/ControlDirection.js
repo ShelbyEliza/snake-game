@@ -1,27 +1,28 @@
-import MoveUp from "./MoveUp";
-import MoveRight from "./MoveRight";
-import MoveDown from "./MoveDown";
-import MoveLeft from "./MoveLeft";
+import MoveUp from "./directions/MoveUp";
+import MoveRight from "./directions/MoveRight";
+import MoveDown from "./directions/MoveDown";
+import MoveLeft from "./directions/MoveLeft";
 
-const ControlDirection = (headID, inputDirection, rows, length) => {
-  let newHead;
+const ControlDirection = (prevHeadRef, inputDirection, rows, length) => {
+  let newHeadID;
+
   switch (inputDirection) {
     case "ArrowUp":
-      newHead = MoveUp(headID, rows, length);
+      newHeadID = MoveUp(prevHeadRef.id, rows, length);
       break;
     case "ArrowRight":
-      newHead = MoveRight(headID, rows, length);
+      newHeadID = MoveRight(prevHeadRef.id, rows, length);
       break;
     case "ArrowDown":
-      newHead = MoveDown(headID, rows, length);
+      newHeadID = MoveDown(prevHeadRef.id, rows, length);
       break;
     case "ArrowLeft":
-      newHead = MoveLeft(headID, rows, length);
+      newHeadID = MoveLeft(prevHeadRef.id, rows, length);
       break;
     default:
-      newHead = MoveDown(headID, rows, length);
+      newHeadID = MoveDown(prevHeadRef.id, rows, length);
   }
-  return newHead;
+  return newHeadID;
 };
 
 export default ControlDirection;

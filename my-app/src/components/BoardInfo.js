@@ -1,8 +1,6 @@
 import "../css/BoardInfo.css";
 
 const BoardInfo = ({ rows, cols, board }) => {
-  // console.log("BoardInfo.js is rendering");
-  // console.log(Snake(board));
   let snakeCell;
   let foodCell;
 
