@@ -11,7 +11,7 @@ export const useTimer = (isGamePaused) => {
       if (!isGamePaused) {
         setTimer((c) => c + 1);
       }
-    }, 2000);
+    }, 1000);
 
     return () => clearInterval(id);
   }, [isGamePaused]);

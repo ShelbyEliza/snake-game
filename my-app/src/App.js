@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import StartGame from "./components/StartGame";
 import BoardInfo from "./components/BoardInfo";
+import GameStatus from "./components/GameStatus";
 import GameBoard from "./components/GameBoard";
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
   const [cols, setCols] = useState();
   const [board, setBoard] = useState([]);
   const [isGamePaused, setIsGamePaused] = useState(true);
+  const [isGameOver, setIsGameOver] = useState(false);
   const [initialHead, setInitialHead] = useState();
   const [initialFood, setInitialFood] = useState();
 
@@ -59,6 +61,21 @@ function App() {
     }
   };
 
+  const handleGameOver = (isGameLost, isGameWon) => {
+    if (isGameLost === true || isGameWon === true) {
+      setIsGamePaused(true);
+      setIsGameOver(true);
+    }
+  };
+
+  const resetBoard = (resetRequest) => {
+    if (resetRequest === true) {
+      handleBoardChange(0);
+      setIsGameOver(false);
+      console.log("Resetting");
+    }
+  };
+
   return (
     <div className="App">
       <StartGame
@@ -74,6 +91,8 @@ function App() {
           isGamePaused={isGamePaused}
           initialHead={initialHead}
           initialFood={initialFood}
+          handleGameOver={handleGameOver}
+          resetBoard={resetBoard}
         />
       )}
     </div>
