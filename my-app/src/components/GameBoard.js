@@ -2,13 +2,12 @@ import "../css/GameBoard.css";
 
 import { useState, useEffect, useRef } from "react";
 import { useTimer } from "../hooks/useTimer";
-import { useDirection } from "../hooks/useDirection";
 
 import Cell from "./Cell";
 import ControlDirection from "./ControlDirection";
 import GenerateFood from "./GenerateFood";
 import ModifySnakeBody from "./ModifySnakeBody";
-import BuildCells from "./BuildCells";
+import Score from "./Score";
 
 const GameBoard = ({ board, rows, isGamePaused, initialHead, initialFood }) => {
   const { timer } = useTimer(isGamePaused);
@@ -24,7 +23,6 @@ const GameBoard = ({ board, rows, isGamePaused, initialHead, initialFood }) => {
   const snakeBodyRef = useRef();
   const foodRef = useRef();
   const amountEatenRef = useRef(0);
-  // const { direction, count } = useDirection(isGamePaused, inputDirection, inputRef);
   const notFood = (cell) => cell.status !== "isFood";
 
   useEffect(() => {
@@ -115,19 +113,6 @@ const GameBoard = ({ board, rows, isGamePaused, initialHead, initialFood }) => {
       });
 
       cellsArray = newCellsArray;
-      // let newCellsArray = cellsArray.map((cell) => {
-      //   if (newBody.includes(cell.id)) {
-      //     if (newBody[cell.id - 1].status === "isSnakeHead") {
-      //       return { ...cell, status: "isSnakeHead" };
-      //     } else if (newBody[cell.id - 1].status === "isSnake") {
-      //       return { ...cell, status: "isSnake" };
-      //     }
-      //   } else {
-      //     return cell;
-      //   }
-      // });
-      console.log(newBody);
-      console.log(newCellsArray);
 
       cellsRef.current = cellsArray;
       prevHeadRef.current = newHead;
@@ -137,6 +122,7 @@ const GameBoard = ({ board, rows, isGamePaused, initialHead, initialFood }) => {
 
   return (
     <>
+      <Score score={amountEatenRef.current} size={size} />
       <div
         className="GameBoard"
         style={{
@@ -149,6 +135,7 @@ const GameBoard = ({ board, rows, isGamePaused, initialHead, initialFood }) => {
               <Cell
                 key={cell.row.toString() + "-" + cell.col.toString()}
                 cell={cell}
+                inputDirection={inputDirection}
               ></Cell>
             ))
           : board.map((cell) => (
@@ -161,7 +148,6 @@ const GameBoard = ({ board, rows, isGamePaused, initialHead, initialFood }) => {
             ))}
       </div>
       <div>
-        <h2 className="score">{amountEatenRef.current}</h2>
         <input
           className="direction"
           type="text"

@@ -1,4 +1,4 @@
-.Cell {
+.cell {
   display: flex;
 
   align-items: center;
@@ -13,59 +13,90 @@
 
   background: rgb(84, 13, 199);
 
-  outline: 1px solid rgb(41, 2, 100);
+  outline: 1px solid rgb(41, 15, 82);
 }
 
-.isFood {
-  display: inline-block;
+.content.isFood {
+  background: floralwhite;
 
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
+  position: relative;
+  text-align: center;
 
-  padding: 4px;
-
-  border-radius: 50%;
-  background: rgba(6, 231, 137, 0.507);
-  border: 1px solid rgb(25, 161, 104);
+  border-radius: 20%;
 }
+.content.isFood:before,
+.content.isFood:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  border-radius: 20%;
 
-.isSnake {
+  background: floralwhite;
+}
+.content.isFood:before {
+  transform: rotate(30deg);
+}
+.content.isFood:after {
+  transform: rotate(60deg);
+}
+.content.isSnake {
   display: flex;
 
-  width: 20px;
-  height: 20px;
+  width: 50%;
+  height: 50%;
 
   padding: 4px;
 
-  border-radius: 50%;
-
-  background: rgba(177, 6, 134, 0.548);
-  border: 1px solid rgba(177, 6, 134);
+  border-radius: 20%;
+  /* background: rgb(63, 18, 52); */
+  background: rgb(61, 24, 121);
+  border: 1px solid rgb(95, 57, 155);
 }
 
-.isSnakeHead {
-  display: inline-block;
+.content.isSnakeHead {
+  width: 0px;
+  height: 0px;
 
-  width: 20px;
-  height: 20px;
+  border-right: 20px solid rgb(41, 15, 82);
+  border-top: 20px solid rgb(41, 15, 82);
+  border-left: 20px solid rgb(41, 15, 82);
+  border-bottom: 20px solid rgb(41, 15, 82);
 
-  padding: 6px;
-
-  border-radius: 50%;
-
-  background: rgba(206, 160, 8, 0.507);
-  border: 1px solid rgb(6, 231, 137);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
-.aroundHead {
-  display: inline-block;
 
-  width: 20px;
-  height: 20px;
+.content.ArrowUp.isSnakeHead {
+  border-top: 20px solid transparent;
 
-  padding: 6px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
 
-  border-radius: 50%;
+.content.ArrowRight.isSnakeHead {
+  border-right: 20px solid transparent;
 
-  background: rgba(51, 8, 119, 0.192);
-  border: 1px solid rgba(50, 8, 119);
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.content.ArrowDown.isSnakeHead {
+  border-bottom: 20px solid transparent;
+
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.content.ArrowLeft.isSnakeHead {
+  border-left: 20px solid transparent;
+
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
 }

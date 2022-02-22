@@ -2,17 +2,8 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  /* width: 660px;
-  height: 660px; */
-
   margin: auto;
-  /* padding: 10px 20px 20px 20px; */
-
-  /* border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px; */
-
-  /* background: rgb(61, 24, 121); */
-  border: 3px solid salmon;
+  border: 8px solid rgb(41, 15, 82);
 }
 .direction {
   display: flex;
@@ -22,9 +13,4 @@
   cursor: pointer;
   width: 30px;
   height: 30px;
-}
-.score {
-  text-align: center;
-  color: salmon;
-  margin-top: 20px;
 }

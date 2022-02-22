@@ -12,7 +12,7 @@ const StartGame = ({ handleBoardChange, isGamePaused, handlePause }) => {
 
   return (
     <div className="StartGame">
-      <form>
+      <form className="select-size">
         <label>GameBoard Size:</label>
         <select
           className="row-col-selection"
@@ -25,7 +25,7 @@ const StartGame = ({ handleBoardChange, isGamePaused, handlePause }) => {
         </select>
       </form>
       {selection !== 0 && (
-        <div>
+        <div className="button-container">
           {isGamePaused && <button onClick={handlePause}>Start Game!</button>}
           {!isGamePaused && <button onClick={handlePause}>Stop Game!</button>}
         </div>

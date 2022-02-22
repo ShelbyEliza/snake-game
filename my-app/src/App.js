@@ -66,7 +66,7 @@ function App() {
         isGamePaused={isGamePaused}
         handlePause={handlePause}
       />
-      {board.length > 0 && <BoardInfo rows={rows} cols={cols} board={board} />}
+      {/* {board.length > 0 && <BoardInfo rows={rows} cols={cols} board={board} />} */}
       {initialHead && board && (
         <GameBoard
           board={board}
