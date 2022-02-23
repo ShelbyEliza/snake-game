@@ -1,33 +1,41 @@
 import "../css/BoardInfo.css";
 
-const BoardInfo = ({ rows, cols, board }) => {
-  let snakeCell;
-  let foodCell;
+import { useStatus } from "../hooks/useStatus";
 
-  board.forEach((cell) => {
-    if (cell.status === "isSnakeHead") {
-      snakeCell = cell;
-    }
-    if (cell.status === "isFood") {
-      foodCell = cell;
-    }
-  });
+const BoardInfo = ({ rows, cols, board }) => {
+  const { overStatus, wonStatus, lostStatus, score } = useStatus();
 
   return (
     <div className="BoardInfo">
       <div className="board-data">
-        Board: {rows} x {cols}
+        Is Game Over?
+        {overStatus ? (
+          <p className="data"> Yes </p>
+        ) : (
+          <p className="data"> No </p>
+        )}
       </div>
-      {snakeCell && (
-        <div className="board-data">
-          Snake: {snakeCell.row} - {snakeCell.col}
-        </div>
-      )}
-      {foodCell && (
-        <div className="board-data">
-          Food: {foodCell.row} - {foodCell.col}
-        </div>
-      )}
+      <div className="board-data">
+        Won:{" "}
+        {wonStatus ? (
+          <p className="data"> Yes </p>
+        ) : (
+          <p className="data"> No </p>
+        )}
+      </div>
+
+      <div className="board-data">
+        Lost:{" "}
+        {lostStatus ? (
+          <p className="data"> Yes </p>
+        ) : (
+          <p className="data"> No </p>
+        )}
+      </div>
+
+      <div className="board-data">
+        Score: <p className="data">{score}</p>
+      </div>
     </div>
   );
 };

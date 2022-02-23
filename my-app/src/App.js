@@ -1,19 +1,20 @@
 import { useState, useEffect } from "react";
 import StartGame from "./components/StartGame";
 import BoardInfo from "./components/BoardInfo";
-import GameStatus from "./components/GameStatus";
 import GameBoard from "./components/GameBoard";
+import GameStatus from "./components/GameStatus";
+import { useStatus } from "./hooks/useStatus";
 
 function App() {
-  // console.log("App.js is rendering");
-
   const [rows, setRows] = useState();
   const [cols, setCols] = useState();
   const [board, setBoard] = useState([]);
   const [isGamePaused, setIsGamePaused] = useState(true);
-  const [isGameOver, setIsGameOver] = useState(false);
+  const [isGameLost, setIsGameLost] = useState(false);
+  const { changeScore } = useStatus();
   const [initialHead, setInitialHead] = useState();
   const [initialFood, setInitialFood] = useState();
+  const [resetToggle, setResetToggle] = useState();
 
   useEffect(() => {
     if (rows !== 0 && rows !== undefined) {
@@ -42,9 +43,8 @@ function App() {
       setInitialHead(grid[midGrid]);
       setInitialFood(grid[initialFood]);
       setBoard(grid);
-      // console.log("Board Built");
     }
-  }, [rows, cols]);
+  }, [rows, cols, resetToggle]);
 
   const handleBoardChange = (size) => {
     let target = parseInt(size);
@@ -61,21 +61,26 @@ function App() {
     }
   };
 
-  const handleGameOver = (isGameLost, isGameWon) => {
-    if (isGameLost === true || isGameWon === true) {
-      setIsGamePaused(true);
-      setIsGameOver(true);
-    }
+  const handleGameOver = () => {
+    setIsGamePaused(true);
+    setIsGameLost(true);
+    // setGameStatus((prevGameStatus) => {
+    //   return { ...prevGameStatus, gameLost: true };
+    // });
   };
 
-  const resetBoard = (resetRequest) => {
-    if (resetRequest === true) {
-      handleBoardChange(0);
-      setIsGameOver(false);
-      console.log("Resetting");
+  const handleReset = () => {
+    changeScore(0);
+    if (resetToggle) {
+      setResetToggle(0);
+    } else {
+      setResetToggle(1);
     }
+
+    console.log("Resetting");
   };
 
+  // console.log(board);
   return (
     <div className="App">
       <StartGame
@@ -83,7 +88,8 @@ function App() {
         isGamePaused={isGamePaused}
         handlePause={handlePause}
       />
-      {/* {board.length > 0 && <BoardInfo rows={rows} cols={cols} board={board} />} */}
+      <BoardInfo />
+      {isGameLost && <GameStatus handleReset={handleReset} />}
       {initialHead && board && (
         <GameBoard
           board={board}
@@ -92,7 +98,6 @@ function App() {
           initialHead={initialHead}
           initialFood={initialFood}
           handleGameOver={handleGameOver}
-          resetBoard={resetBoard}
         />
       )}
     </div>

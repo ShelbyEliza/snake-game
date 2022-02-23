@@ -2,9 +2,9 @@ import "../css/GameBoard.css";
 
 import { useState, useEffect, useRef } from "react";
 import { useTimer } from "../hooks/useTimer";
+import { useStatus } from "../hooks/useStatus";
 
 import Cell from "./Cell";
-import Score from "./Score";
 import GameStatus from "./GameStatus";
 import CheckForOpposite from "./CheckForOpposite";
 import ControlDirection from "./ControlDirection";
@@ -18,20 +18,18 @@ const GameBoard = ({
   initialHead,
   initialFood,
   handleGameOver,
-  resetBoard,
 }) => {
+  const [isGameLost, setIsGameLost] = useState(false);
+  const { changeOverStatus, changeLostStatus, changeScore } = useStatus();
   const { timer } = useTimer(isGamePaused);
+
   const controller = useRef(null);
-  const [gameStatus, setGameStatus] = useState({
-    gameWon: false,
-    gameLost: false,
-  });
   const [inputDirection, setInputDirection] = useState("ArrowDown");
   const [size, setSize] = useState();
   const [length, setLength] = useState(board.length);
   const [cells, setCells] = useState();
+  // const [resetToggle, setResetToggle] = useState(0);
 
-  const endGameRef = useRef(board);
   const cellsRef = useRef(board);
   const prevHeadRef = useRef(initialHead);
   const snakeBodyRef = useRef();
@@ -41,18 +39,13 @@ const GameBoard = ({
 
   useEffect(() => {
     if (board) {
-      console.log(rows);
-      endGameRef.current = board;
       cellsRef.current = board;
       prevHeadRef.current = initialHead;
       snakeBodyRef.current = [];
       foodRef.current = initialFood;
       amountEatenRef.current = 0;
+      console.log("using effect");
 
-      setGameStatus({
-        gameWon: false,
-        gameLost: false,
-      });
       setInputDirection("ArrowDown");
       setLength(board.length);
       setSize(rows * 60);
@@ -90,14 +83,13 @@ const GameBoard = ({
         }
         if (cell.id === newHead) {
           if (cell.status === "isSnake") {
-            setGameStatus((prevGameStatus) => {
-              return { ...prevGameStatus, gameLost: true };
-            });
+            setIsGameLost(true);
             console.log("Opps, Game Over!");
           }
           if (cell.status === "isFood") {
             wasFoodEaten = true;
             amountEatenRef.current++;
+            changeScore(amountEatenRef.current);
           }
           cell.status = "isSnakeHead";
           newHead = cell;
@@ -139,22 +131,35 @@ const GameBoard = ({
       prevHeadRef.current = newHead;
       setCells(cellsArray);
     }
-  }, [timer, rows, length, inputDirection]);
+  }, [timer, rows, length, inputDirection, changeScore]);
 
   useEffect(() => {
-    handleGameOver(gameStatus.gameLost, gameStatus.gameWon);
-  }, [gameStatus, handleGameOver]);
+    if (isGameLost) {
+      handleGameOver();
+      setIsGameLost(false);
+    }
+  }, [isGameLost, handleGameOver]);
 
-  const resetStatus = () => {
-    setGameStatus({
-      gameWon: false,
-      gameLost: false,
-    });
-  };
+  // useEffect(() => {
+  //   setIsGameLost(true);
+  // }, [resetToggle])
+
+  // const handleReset = () => {
+  //   // changeOverStatus(false);
+  //   // changeLostStatus(false);
+  //   changeScore(0);
+  //   if (resetToggle) {
+  //     setResetToggle(0);
+  //   } else {
+  //     setResetToggle(1);
+  //   }
+
+  //   console.log("Resetting");
+  // };
 
   return (
     <>
-      <Score score={amountEatenRef.current} size={size} />
+      {/* {isGameLost && <GameStatus handleReset={handleReset} />} */}
       <div
         className="GameBoard"
         style={{
@@ -163,8 +168,6 @@ const GameBoard = ({
         }}
       >
         {cells &&
-          !gameStatus.gameLost &&
-          !gameStatus.gameWon &&
           cells.map((cell) => (
             <Cell
               key={cell.row.toString() + "-" + cell.col.toString()}
@@ -172,15 +175,6 @@ const GameBoard = ({
               inputDirection={inputDirection}
             ></Cell>
           ))}
-        {(gameStatus.gameLost || gameStatus.gameWon) && (
-          <GameStatus
-            winStatus={gameStatus.gameWon}
-            loseStatus={gameStatus.gameLost}
-            score={amountEatenRef.current}
-            resetBoard={resetBoard}
-            resetStatus={resetStatus}
-          ></GameStatus>
-        )}
       </div>
       <div>
         <input
