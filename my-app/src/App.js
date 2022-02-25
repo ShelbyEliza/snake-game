@@ -64,9 +64,6 @@ function App() {
   const handleGameOver = () => {
     setIsGamePaused(true);
     setIsGameLost(true);
-    // setGameStatus((prevGameStatus) => {
-    //   return { ...prevGameStatus, gameLost: true };
-    // });
   };
 
   const handleReset = () => {
@@ -76,11 +73,11 @@ function App() {
     } else {
       setResetToggle(1);
     }
+    setIsGameLost(false);
 
     console.log("Resetting");
   };
 
-  // console.log(board);
   return (
     <div className="App">
       <StartGame

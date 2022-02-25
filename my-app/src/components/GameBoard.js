@@ -5,11 +5,10 @@ import { useTimer } from "../hooks/useTimer";
 import { useStatus } from "../hooks/useStatus";
 
 import Cell from "./Cell";
-import GameStatus from "./GameStatus";
 import CheckForOpposite from "./CheckForOpposite";
-import ControlDirection from "./ControlDirection";
 import GenerateFood from "./GenerateFood";
 import ModifySnakeBody from "./ModifySnakeBody";
+import GetSnakeHead from "./GetSnakeHead";
 
 const GameBoard = ({
   board,
@@ -20,7 +19,7 @@ const GameBoard = ({
   handleGameOver,
 }) => {
   const [isGameLost, setIsGameLost] = useState(false);
-  const { changeOverStatus, changeLostStatus, changeScore } = useStatus();
+  const { changeScore } = useStatus();
   const { timer } = useTimer(isGamePaused);
 
   const controller = useRef(null);
@@ -28,8 +27,8 @@ const GameBoard = ({
   const [size, setSize] = useState();
   const [length, setLength] = useState(board.length);
   const [cells, setCells] = useState();
-  // const [resetToggle, setResetToggle] = useState(0);
 
+  const newSnakeHead = useRef();
   const cellsRef = useRef(board);
   const prevHeadRef = useRef(initialHead);
   const snakeBodyRef = useRef();
@@ -44,7 +43,6 @@ const GameBoard = ({
       snakeBodyRef.current = [];
       foodRef.current = initialFood;
       amountEatenRef.current = 0;
-      console.log("using effect");
 
       setInputDirection("ArrowDown");
       setLength(board.length);
@@ -68,20 +66,24 @@ const GameBoard = ({
   };
 
   useEffect(() => {
+    newSnakeHead.current = GetSnakeHead(
+      prevHeadRef,
+      inputDirection,
+      rows,
+      length,
+      cellsRef
+    );
+  }, [inputDirection, timer, length, rows]);
+
+  useEffect(() => {
     if (timer) {
       let wasFoodEaten = false;
-      let newHead = ControlDirection(
-        prevHeadRef.current,
-        inputDirection,
-        rows,
-        length
-      );
 
       let cellsArray = cellsRef.current.map((cell) => {
         if (cell.id === prevHeadRef.current.id) {
           return { ...cell, status: "notSnake" };
         }
-        if (cell.id === newHead) {
+        if (cell.id === newSnakeHead.current.id) {
           if (cell.status === "isSnake") {
             setIsGameLost(true);
             console.log("Opps, Game Over!");
@@ -92,7 +94,7 @@ const GameBoard = ({
             changeScore(amountEatenRef.current);
           }
           cell.status = "isSnakeHead";
-          newHead = cell;
+          newSnakeHead.current = cell;
           return cell;
         } else {
           return cell;
@@ -106,7 +108,7 @@ const GameBoard = ({
 
       let newBody = ModifySnakeBody(
         snakeBodyRef.current,
-        newHead,
+        newSnakeHead.current,
         wasFoodEaten,
         amountEatenRef.current,
         cellsArray
@@ -128,10 +130,10 @@ const GameBoard = ({
       });
 
       cellsRef.current = cellsArray;
-      prevHeadRef.current = newHead;
+      prevHeadRef.current = newSnakeHead.current;
       setCells(cellsArray);
     }
-  }, [timer, rows, length, inputDirection, changeScore]);
+  }, [timer, rows, length, changeScore]);
 
   useEffect(() => {
     if (isGameLost) {
@@ -140,26 +142,8 @@ const GameBoard = ({
     }
   }, [isGameLost, handleGameOver]);
 
-  // useEffect(() => {
-  //   setIsGameLost(true);
-  // }, [resetToggle])
-
-  // const handleReset = () => {
-  //   // changeOverStatus(false);
-  //   // changeLostStatus(false);
-  //   changeScore(0);
-  //   if (resetToggle) {
-  //     setResetToggle(0);
-  //   } else {
-  //     setResetToggle(1);
-  //   }
-
-  //   console.log("Resetting");
-  // };
-
   return (
     <>
-      {/* {isGameLost && <GameStatus handleReset={handleReset} />} */}
       <div
         className="GameBoard"
         style={{
