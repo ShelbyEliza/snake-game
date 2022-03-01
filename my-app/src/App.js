@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
+import { useStatus } from "./hooks/useStatus";
 import StartGame from "./components/StartGame";
-import BoardInfo from "./components/BoardInfo";
 import GameBoard from "./components/GameBoard";
 import GameStatus from "./components/GameStatus";
-import { useStatus } from "./hooks/useStatus";
 import Modal from "./components/Modal";
 
 function App() {
@@ -12,10 +11,12 @@ function App() {
   const [board, setBoard] = useState([]);
   const [isGamePaused, setIsGamePaused] = useState(true);
   const [isGameLost, setIsGameLost] = useState(false);
-  const { changeScore } = useStatus();
+  const [isGameWon, setIsGameWon] = useState(false);
+  const { changeDifficultyLevel, changePauseState, changeScore } = useStatus();
   const [initialHead, setInitialHead] = useState();
   const [initialFood, setInitialFood] = useState();
   const [resetToggle, setResetToggle] = useState();
+  const [difficulty, setDifficulty] = useState(1000);
 
   useEffect(() => {
     if (rows !== 0 && rows !== undefined) {
@@ -39,7 +40,11 @@ function App() {
         }
       }
       grid[midGrid].status = "isSnakeHead";
-      grid[initialFood].status = "isFood";
+      if (initialFood > totalCells) {
+        grid[midGrid + rows].status = "isFood";
+      } else {
+        grid[initialFood].status = "isFood";
+      }
 
       setInitialHead(grid[midGrid]);
       setInitialFood(grid[initialFood]);
@@ -56,15 +61,26 @@ function App() {
   const handlePause = () => {
     if (isGamePaused) {
       setIsGamePaused(false);
+      changePauseState(false);
     }
     if (isGamePaused === false) {
       setIsGamePaused(true);
+      changePauseState(true);
     }
   };
 
-  const handleGameOver = () => {
+  const handleDifficultyLevel = (level) => {
+    changeDifficultyLevel(level);
+  };
+
+  const handleGameOver = (isGameLost, isGameWon) => {
     setIsGamePaused(true);
-    setIsGameLost(true);
+    if (isGameLost) {
+      setIsGameLost(true);
+    }
+    if (isGameWon) {
+      setIsGameWon(true);
+    }
   };
 
   const handleReset = () => {
@@ -75,7 +91,7 @@ function App() {
       setResetToggle(1);
     }
     setIsGameLost(false);
-
+    setIsGameWon(false);
     console.log("Resetting");
   };
 
@@ -85,11 +101,17 @@ function App() {
         handleBoardChange={handleBoardChange}
         isGamePaused={isGamePaused}
         handlePause={handlePause}
+        handleDifficultyLevel={handleDifficultyLevel}
+        difficulty={difficulty}
       />
       {/* <BoardInfo /> */}
-      {isGameLost && (
+      {(isGameLost || isGameWon) && (
         <Modal>
-          <GameStatus handleReset={handleReset} />
+          <GameStatus
+            handleReset={handleReset}
+            isGameLost={isGameLost}
+            isGameWon={isGameWon}
+          />
         </Modal>
       )}
       {initialHead && board && (

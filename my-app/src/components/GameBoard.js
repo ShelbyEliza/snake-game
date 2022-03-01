@@ -19,6 +19,7 @@ const GameBoard = ({
   handleGameOver,
 }) => {
   const [isGameLost, setIsGameLost] = useState(false);
+  const [isGameWon, setIsGameWon] = useState(false);
   const { changeScore } = useStatus();
   const { timer } = useTimer(isGamePaused);
 
@@ -129,6 +130,11 @@ const GameBoard = ({
         return cell;
       });
 
+      if (ids.length === cellsArray.length - 1) {
+        setIsGameWon(true);
+        console.log("Good Job");
+      }
+
       cellsRef.current = cellsArray;
       prevHeadRef.current = newSnakeHead.current;
       setCells(cellsArray);
@@ -137,10 +143,14 @@ const GameBoard = ({
 
   useEffect(() => {
     if (isGameLost) {
-      handleGameOver();
+      handleGameOver(isGameLost, isGameWon);
       setIsGameLost(false);
     }
-  }, [isGameLost, handleGameOver]);
+    if (isGameWon) {
+      handleGameOver(isGameLost, isGameWon);
+      setIsGameWon(false);
+    }
+  }, [isGameLost, isGameWon, handleGameOver]);
 
   return (
     <>

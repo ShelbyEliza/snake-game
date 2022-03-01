@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
+import { useStatus } from "./useStatus";
 
 export const useTimer = (isGamePaused) => {
   const [timer, setTimer] = useState(0);
+  const { difficultyLevel } = useStatus();
 
   useEffect(() => {
     if (isGamePaused) {
@@ -11,10 +13,10 @@ export const useTimer = (isGamePaused) => {
       if (!isGamePaused) {
         setTimer((c) => c + 1);
       }
-    }, 1000);
+    }, difficultyLevel);
 
     return () => clearInterval(id);
-  }, [isGamePaused]);
+  }, [isGamePaused, difficultyLevel]);
 
   return { timer };
 };

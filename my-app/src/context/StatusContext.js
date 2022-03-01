@@ -14,6 +14,10 @@ const statusReducer = (state, action) => {
       return { ...state, score: action.payload };
     case "CHANGE_RESET_REQUEST":
       return { ...state, resetRequest: action.payload };
+    case "CHANGE_PAUSE_STATE":
+      return { ...state, pauseState: action.payload };
+    case "CHANGE_DIFFICULTY_LEVEL":
+      return { ...state, difficultyLevel: action.payload };
     default:
       return state;
   }
@@ -26,6 +30,8 @@ export function StatusProvider({ children }) {
     lostStatus: false,
     score: 0,
     resetRequest: false,
+    pauseState: true,
+    difficultyLevel: 1000,
   });
 
   const changeOverStatus = (overStatus) => {
@@ -43,6 +49,12 @@ export function StatusProvider({ children }) {
   const changeResetRequest = (resetRequest) => {
     dispatch({ type: "CHANGE_RESET_REQUEST", payload: resetRequest });
   };
+  const changePauseState = (pauseState) => {
+    dispatch({ type: "CHANGE_PAUSE_STATE", payload: pauseState });
+  };
+  const changeDifficultyLevel = (difficultyLevel) => {
+    dispatch({ type: "CHANGE_DIFFICULTY_LEVEL", payload: difficultyLevel });
+  };
 
   return (
     <StatusContext.Provider
@@ -53,6 +65,8 @@ export function StatusProvider({ children }) {
         changeLostStatus,
         changeScore,
         changeResetRequest,
+        changePauseState,
+        changeDifficultyLevel,
       }}
     >
       {children}

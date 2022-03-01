@@ -53,6 +53,18 @@ option {
   color: rgb(32, 6, 73);
 }
 
+.StartGame .game-options {
+  display: flex;
+  flex-direction: column;
+}
+/* .StartGame .size-selection-container {
+  margin-bottom: 10px;
+} */
+.StartGame .difficulty-container {
+  display: flex;
+  align-items: center;
+  /* flex-direction: column; */
+}
 .StartGame button {
   box-sizing: border-box;
   width: 70px;
@@ -71,9 +83,6 @@ option {
   cursor: pointer;
 }
 
-.StartGame .button-text {
-  width: 100%;
-}
 .StartGame button:hover {
   background: rgb(95, 57, 155);
   border-left: 0.5px solid rgb(173, 171, 165);
@@ -82,7 +91,4 @@ option {
   border-bottom: 0.5px solid rgb(173, 171, 165);
   /* border-bottom: none;
   border-right: none; */
-}
-.StartGame .button-text:hover {
-  /* color: rgb(184, 180, 175); */
 }
