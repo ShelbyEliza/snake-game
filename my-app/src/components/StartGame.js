@@ -1,8 +1,10 @@
 import "../css/StartGame.css";
 import { useEffect, useState } from "react";
+import { useStatus } from "../hooks/useStatus";
 
 const StartGame = ({ handleBoardChange, isGamePaused, handlePause }) => {
   const [selection, setSelection] = useState(0);
+  const { score } = useStatus();
 
   useEffect(() => {
     handleBoardChange(selection);
@@ -10,8 +12,14 @@ const StartGame = ({ handleBoardChange, isGamePaused, handlePause }) => {
 
   return (
     <div className="StartGame">
+      {selection !== 0 && (
+        <div className="conditional">
+          <p className="score-label">Score</p>
+          <p className="score">{score}</p>
+        </div>
+      )}
       <form className="select-size">
-        <label>GameBoard Size:</label>
+        <label>Game Board Size:</label>
         <select
           className="row-col-selection"
           onChange={(e) => setSelection(e.target.value)}
@@ -23,9 +31,15 @@ const StartGame = ({ handleBoardChange, isGamePaused, handlePause }) => {
         </select>
       </form>
       {selection !== 0 && (
-        <div className="button-container">
-          {isGamePaused && <button onClick={handlePause}>Start Game!</button>}
-          {!isGamePaused && <button onClick={handlePause}>Stop Game!</button>}
+        <div className="conditional">
+          <div className="button-container display-data">
+            {isGamePaused && (
+              <button onClick={handlePause}>
+                <p className="button-text">Start Game!</p>
+              </button>
+            )}
+            {!isGamePaused && <button onClick={handlePause}>Stop Game!</button>}
+          </div>
         </div>
       )}
     </div>

@@ -4,6 +4,7 @@ import BoardInfo from "./components/BoardInfo";
 import GameBoard from "./components/GameBoard";
 import GameStatus from "./components/GameStatus";
 import { useStatus } from "./hooks/useStatus";
+import Modal from "./components/Modal";
 
 function App() {
   const [rows, setRows] = useState();
@@ -85,8 +86,12 @@ function App() {
         isGamePaused={isGamePaused}
         handlePause={handlePause}
       />
-      <BoardInfo />
-      {isGameLost && <GameStatus handleReset={handleReset} />}
+      {/* <BoardInfo /> */}
+      {isGameLost && (
+        <Modal>
+          <GameStatus handleReset={handleReset} />
+        </Modal>
+      )}
       {initialHead && board && (
         <GameBoard
           board={board}

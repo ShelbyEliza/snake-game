@@ -1,47 +1,88 @@
 .StartGame {
   display: flex;
-
-  align-items: end;
-  background: rgb(61, 24, 121);
+  flex-direction: row;
+  align-items: center;
   justify-content: space-between;
-  padding: 10px;
-  margin: auto;
-  width: 600px;
 
-  /* border-bottom: 2px solid rgb(41, 15, 82); */
-  border-top: 2px solid rgb(41, 15, 82);
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  /* border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  border-bottom: 8px solid rgb(41, 15, 82); */
-
+  background: rgb(61, 24, 121);
   color: floralwhite;
+
+  height: 80px;
+  max-width: 800px;
+  margin: auto;
+  padding: 8px;
+
+  border-radius: 10px;
+  border-bottom: 2px solid rgb(41, 15, 82);
+  border-top: 2px solid rgb(41, 15, 82);
+
+  text-align: center;
 }
-.StartGame button {
-  width: 30px;
-  height: 30px;
-  padding: 15px 15px;
 
+.StartGame .conditional {
+  padding: 0px 20px;
+  width: 100px;
+  margin: 0px 20px;
+}
+
+.StartGame .score-label {
+  border: 2px solid floralwhite;
+  border-radius: 6px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+
+  border-bottom: none;
+
+  padding: 1px;
   background: rgb(95, 57, 155);
+}
+.StartGame .score {
+  border: 2px solid floralwhite;
+  border-radius: 6px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
 
+  padding: 1px;
+  background: rgb(95, 57, 155);
+}
+
+.StartGame select,
+option {
+  padding: 2px;
+  text-align: center;
+  color: rgb(32, 6, 73);
+}
+
+.StartGame button {
+  box-sizing: border-box;
+  width: 70px;
+  height: 70px;
+  background: rgb(64, 38, 105);
+
+  font-size: 14px;
+  font-weight: 600;
+
+  border-radius: 50%;
+  border-right: 2px solid rgb(173, 171, 165);
+  border-bottom: 4px solid rgb(173, 171, 165);
   border-top: none;
   border-left: none;
-  border-right: 2px solid rgba(215, 205, 230, 0.822);
-  border-bottom: 3px solid rgba(215, 205, 230, 0.822);
-  border-radius: 60px;
 
-  color: floralwhite;
-  font-size: 10px;
-  font-weight: bold;
   cursor: pointer;
 }
 
-.StartGame .select-size {
-  padding-left: 50px;
+.StartGame .button-text {
+  width: 100%;
 }
-
-.StartGame .button-container {
-  padding-right: 30px;
-  padding-top: 10px;
+.StartGame button:hover {
+  background: rgb(95, 57, 155);
+  border-left: 0.5px solid rgb(173, 171, 165);
+  border-top: 0.5px solid rgb(173, 171, 165);
+  border-right: 0.5px solid rgb(173, 171, 165);
+  border-bottom: 0.5px solid rgb(173, 171, 165);
+  /* border-bottom: none;
+  border-right: none; */
+}
+.StartGame .button-text:hover {
+  /* color: rgb(184, 180, 175); */
 }
