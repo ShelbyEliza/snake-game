@@ -40,11 +40,7 @@ function App() {
         }
       }
       grid[midGrid].status = "isSnakeHead";
-      if (initialFood > totalCells) {
-        grid[midGrid + rows].status = "isFood";
-      } else {
-        grid[initialFood].status = "isFood";
-      }
+      grid[initialFood].status = "isFood";
 
       setInitialHead(grid[midGrid]);
       setInitialFood(grid[initialFood]);
@@ -70,7 +66,7 @@ function App() {
   };
 
   const handleDifficultyLevel = (level) => {
-    changeDifficultyLevel(level);
+    changeDifficultyLevel(-level);
   };
 
   const handleGameOver = (isGameLost, isGameWon) => {
@@ -94,6 +90,7 @@ function App() {
     setIsGameWon(false);
     console.log("Resetting");
   };
+  // console.log(board);
 
   return (
     <div className="App">

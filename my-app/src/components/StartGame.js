@@ -31,23 +31,23 @@ const StartGame = ({
             onChange={(e) => setSelection(e.target.value)}
           >
             <option value={0}></option>
-            <option value={3}>3 x 3</option>
+            {/* <option value={3}>3 x 3</option> */}
             <option value={7}>7 x 7</option>
             <option value={9}>9 x 9</option>
             <option value={11}>11 x 11</option>
           </select>
         </div>
         <div className="difficulty-container">
-          <label>Hard</label>
+          <label>Easy</label>
           <input
             type="range"
             id="difficulty"
-            min="250"
-            max="1000"
+            min="-1000"
+            max="-250"
             step="250"
             onChange={(e) => handleDifficultyLevel(e.target.value)}
           />
-          <label>Easy</label>
+          <label>Hard</label>
         </div>
       </form>
       {selection !== 0 && (

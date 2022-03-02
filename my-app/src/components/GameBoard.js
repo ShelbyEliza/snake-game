@@ -77,9 +77,9 @@ const GameBoard = ({
   }, [inputDirection, timer, length, rows]);
 
   useEffect(() => {
-    if (timer) {
+    if (timer !== 0) {
       let wasFoodEaten = false;
-
+      // console.log(cellsRef.current);
       let cellsArray = cellsRef.current.map((cell) => {
         if (cell.id === prevHeadRef.current.id) {
           return { ...cell, status: "notSnake" };
@@ -101,6 +101,7 @@ const GameBoard = ({
           return cell;
         }
       });
+      // console.log(cellsRef.current);
 
       if (cellsArray.every(notFood)) {
         foodRef.current = GenerateFood(cellsArray, length);
@@ -114,6 +115,7 @@ const GameBoard = ({
         amountEatenRef.current,
         cellsArray
       );
+      // console.log(newBody);
 
       let ids = newBody.map((segment) => segment.id);
 
@@ -136,10 +138,19 @@ const GameBoard = ({
       }
 
       cellsRef.current = cellsArray;
+      // console.log(cellsRef.current);
       prevHeadRef.current = newSnakeHead.current;
       setCells(cellsArray);
     }
+    // else {
+    //   console.log(cellsRef.current, prevHeadRef.current);
+    // }
   }, [timer, rows, length, changeScore]);
+
+  // if (isGamePaused) {
+  //   console.log(cellsRef.current);
+  //   console.log(cells);
+  // }
 
   useEffect(() => {
     if (isGameLost) {
@@ -178,6 +189,7 @@ const GameBoard = ({
           ref={controller}
         />
       </div>
+      <div>{timer}</div>
     </>
   );
 };

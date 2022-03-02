@@ -6,9 +6,9 @@ export const useTimer = (isGamePaused) => {
   const { difficultyLevel } = useStatus();
 
   useEffect(() => {
-    if (isGamePaused) {
-      setTimer(0);
-    }
+    // if (isGamePaused) {
+    //   setTimer(0);
+    // }
     const id = setInterval(() => {
       if (!isGamePaused) {
         setTimer((c) => c + 1);
