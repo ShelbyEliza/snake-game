@@ -12,11 +12,10 @@ function App() {
   const [isGamePaused, setIsGamePaused] = useState(true);
   const [isGameLost, setIsGameLost] = useState(false);
   const [isGameWon, setIsGameWon] = useState(false);
-  const { changeDifficultyLevel, changePauseState, changeScore } = useStatus();
+  const { changePauseState, changeScore } = useStatus();
   const [initialHead, setInitialHead] = useState();
   const [initialFood, setInitialFood] = useState();
   const [resetToggle, setResetToggle] = useState();
-  const [difficulty, setDifficulty] = useState(1000);
 
   useEffect(() => {
     if (rows !== 0 && rows !== undefined) {
@@ -65,10 +64,6 @@ function App() {
     }
   };
 
-  const handleDifficultyLevel = (level) => {
-    changeDifficultyLevel(-level);
-  };
-
   const handleGameOver = (isGameLost, isGameWon) => {
     setIsGamePaused(true);
     if (isGameLost) {
@@ -90,7 +85,6 @@ function App() {
     setIsGameWon(false);
     console.log("Resetting");
   };
-  // console.log(board);
 
   return (
     <div className="App">
@@ -98,10 +92,7 @@ function App() {
         handleBoardChange={handleBoardChange}
         isGamePaused={isGamePaused}
         handlePause={handlePause}
-        handleDifficultyLevel={handleDifficultyLevel}
-        difficulty={difficulty}
       />
-      {/* <BoardInfo /> */}
       {(isGameLost || isGameWon) && (
         <Modal>
           <GameStatus

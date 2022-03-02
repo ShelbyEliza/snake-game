@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  /* justify-content: center; */
 
   background: rgb(61, 24, 121);
   color: floralwhite;
@@ -69,14 +70,14 @@ option {
   box-sizing: border-box;
   width: 70px;
   height: 70px;
-  background: rgb(64, 38, 105);
+  background: rgb(95, 57, 155);
 
   font-size: 14px;
   font-weight: 600;
 
   border-radius: 50%;
-  border-right: 2px solid rgb(173, 171, 165);
-  border-bottom: 4px solid rgb(173, 171, 165);
+  border-right: 2px solid floralwhite;
+  border-bottom: 3px solid floralwhite;
   border-top: none;
   border-left: none;
 
@@ -85,10 +86,11 @@ option {
 
 .StartGame button:hover {
   background: rgb(95, 57, 155);
-  border-left: 0.5px solid rgb(173, 171, 165);
+  border: 3px solid rgb(173, 171, 165);
+  /* border-left: 0.5px solid rgb(173, 171, 165);
   border-top: 0.5px solid rgb(173, 171, 165);
   border-right: 0.5px solid rgb(173, 171, 165);
-  border-bottom: 0.5px solid rgb(173, 171, 165);
+  border-bottom: 0.5px solid rgb(173, 171, 165); */
   /* border-bottom: none;
   border-right: none; */
 }

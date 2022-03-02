@@ -10,6 +10,8 @@ import GenerateFood from "./GenerateFood";
 import ModifySnakeBody from "./ModifySnakeBody";
 import GetSnakeHead from "./GetSnakeHead";
 
+const _ = require("lodash");
+
 const GameBoard = ({
   board,
   rows,
@@ -30,7 +32,7 @@ const GameBoard = ({
   const [cells, setCells] = useState();
 
   const newSnakeHead = useRef();
-  const cellsRef = useRef(board);
+  const cellsRef = useRef();
   const prevHeadRef = useRef(initialHead);
   const snakeBodyRef = useRef();
   const foodRef = useRef();
@@ -39,7 +41,8 @@ const GameBoard = ({
 
   useEffect(() => {
     if (board) {
-      cellsRef.current = board;
+      const deepBoard = _.cloneDeep(board);
+      cellsRef.current = deepBoard;
       prevHeadRef.current = initialHead;
       snakeBodyRef.current = [];
       foodRef.current = initialFood;
@@ -48,7 +51,7 @@ const GameBoard = ({
       setInputDirection("ArrowDown");
       setLength(board.length);
       setSize(rows * 60);
-      setCells(board);
+      setCells(deepBoard);
     }
   }, [board, rows, length, initialHead, initialFood]);
 
@@ -79,7 +82,6 @@ const GameBoard = ({
   useEffect(() => {
     if (timer !== 0) {
       let wasFoodEaten = false;
-      // console.log(cellsRef.current);
       let cellsArray = cellsRef.current.map((cell) => {
         if (cell.id === prevHeadRef.current.id) {
           return { ...cell, status: "notSnake" };
@@ -101,7 +103,6 @@ const GameBoard = ({
           return cell;
         }
       });
-      // console.log(cellsRef.current);
 
       if (cellsArray.every(notFood)) {
         foodRef.current = GenerateFood(cellsArray, length);
@@ -115,7 +116,6 @@ const GameBoard = ({
         amountEatenRef.current,
         cellsArray
       );
-      // console.log(newBody);
 
       let ids = newBody.map((segment) => segment.id);
 
@@ -138,19 +138,10 @@ const GameBoard = ({
       }
 
       cellsRef.current = cellsArray;
-      // console.log(cellsRef.current);
       prevHeadRef.current = newSnakeHead.current;
       setCells(cellsArray);
     }
-    // else {
-    //   console.log(cellsRef.current, prevHeadRef.current);
-    // }
   }, [timer, rows, length, changeScore]);
-
-  // if (isGamePaused) {
-  //   console.log(cellsRef.current);
-  //   console.log(cells);
-  // }
 
   useEffect(() => {
     if (isGameLost) {
@@ -173,6 +164,7 @@ const GameBoard = ({
         }}
       >
         {cells &&
+          rows !== 0 &&
           cells.map((cell) => (
             <Cell
               key={cell.row.toString() + "-" + cell.col.toString()}
@@ -189,7 +181,6 @@ const GameBoard = ({
           ref={controller}
         />
       </div>
-      <div>{timer}</div>
     </>
   );
 };
