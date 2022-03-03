@@ -19,8 +19,8 @@
 .content.isFood {
   background: floralwhite;
 
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
   position: relative;
   text-align: center;
 
@@ -32,8 +32,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  height: 25px;
-  width: 25px;
+  height: 20px;
+  width: 20px;
   border-radius: 20%;
 
   background: floralwhite;
@@ -52,51 +52,46 @@
 
   padding: 4px;
 
-  border-radius: 20%;
+  border-radius: 50%;
   /* background: rgb(63, 18, 52); */
-  background: rgb(61, 24, 121);
-  border: 1px solid rgb(95, 57, 155);
+  /* background: rgb(141, 153, 90); */
+  background: rgb(182, 126, 138);
 }
 
 .content.isSnakeHead {
   width: 0px;
   height: 0px;
+  border-color: rgb(136, 92, 112);
+  border-style: solid;
+  border-width: 20px;
 
-  border-right: 20px solid rgb(41, 15, 82);
-  border-top: 20px solid rgb(41, 15, 82);
-  border-left: 20px solid rgb(41, 15, 82);
-  border-bottom: 20px solid rgb(41, 15, 82);
-
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-radius: 20px;
 }
 
-.content.ArrowUp.isSnakeHead {
+.content.KeyW.isSnakeHead {
   border-top: 20px solid transparent;
 
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
 }
 
-.content.ArrowRight.isSnakeHead {
+.content.KeyD.isSnakeHead {
   border-right: 20px solid transparent;
 
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
 }
 
-.content.ArrowDown.isSnakeHead {
+.content.KeyS.isSnakeHead {
   border-bottom: 20px solid transparent;
 
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
 }
 
-.content.ArrowLeft.isSnakeHead {
+.content.KeyA.isSnakeHead {
   border-left: 20px solid transparent;
 
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
 }

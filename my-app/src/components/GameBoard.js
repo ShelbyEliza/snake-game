@@ -1,6 +1,6 @@
 import "../css/GameBoard.css";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useTimer } from "../hooks/useTimer";
 import { useStatus } from "../hooks/useStatus";
 
@@ -8,7 +8,7 @@ import Cell from "./Cell";
 import CheckForOpposite from "./CheckForOpposite";
 import GenerateFood from "./GenerateFood";
 import ModifySnakeBody from "./ModifySnakeBody";
-import GetSnakeHead from "./GetSnakeHead";
+import GenerateSnakeHead from "./GenerateSnakeHead";
 
 const _ = require("lodash");
 
@@ -25,8 +25,7 @@ const GameBoard = ({
   const { changeScore } = useStatus();
   const { timer } = useTimer(isGamePaused);
 
-  const controller = useRef(null);
-  const [inputDirection, setInputDirection] = useState("ArrowDown");
+  const [inputDirection, setInputDirection] = useState("KeyS");
   const [size, setSize] = useState();
   const [length, setLength] = useState(board.length);
   const [cells, setCells] = useState();
@@ -48,29 +47,36 @@ const GameBoard = ({
       foodRef.current = initialFood;
       amountEatenRef.current = 0;
 
-      setInputDirection("ArrowDown");
+      setInputDirection("KeyS");
       setLength(board.length);
       setSize(rows * 60);
       setCells(deepBoard);
     }
   }, [board, rows, length, initialHead, initialFood]);
 
-  // focuses on input when game is not paused:
-  useEffect(() => {
-    if (!isGamePaused) {
-      controller.current.focus();
-    }
-  }, [isGamePaused]);
+  // function assesses keyup event:
+  const handleDirection = useCallback(
+    (e) => {
+      if (!isGamePaused) {
+        // console.log(e.code);
+        if (inputDirection !== e.code) {
+          setInputDirection(CheckForOpposite(inputDirection, e.code));
+        }
+      }
+    },
+    [inputDirection, isGamePaused]
+  );
 
-  // function logs whatever key was pressed:
-  const handleDirection = (e) => {
-    if (inputDirection !== e.key) {
-      setInputDirection(CheckForOpposite(inputDirection, e.key));
-    }
-  };
+  useEffect(() => {
+    document.addEventListener("keyup", handleDirection);
+
+    return () => {
+      document.removeEventListener("keyup", handleDirection);
+    };
+  }, [handleDirection]);
 
   useEffect(() => {
-    newSnakeHead.current = GetSnakeHead(
+    newSnakeHead.current = GenerateSnakeHead(
       prevHeadRef,
       inputDirection,
       rows,
@@ -172,14 +178,6 @@ const GameBoard = ({
               inputDirection={inputDirection}
             ></Cell>
           ))}
-      </div>
-      <div>
-        <input
-          className="direction"
-          type="text"
-          onKeyUp={(e) => handleDirection(e)}
-          ref={controller}
-        />
       </div>
     </>
   );

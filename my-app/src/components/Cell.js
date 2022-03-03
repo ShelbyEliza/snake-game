@@ -6,7 +6,7 @@ const Cell = ({ cell, inputDirection }) => {
 
   return (
     <div className={classNamesCell}>
-      {cell.id}
+      {/* {cell.id} */}
       {/* <div className="cell"> */}
       {/* <div className={cell.status}>{cell.id}</div> */}
       <div className={classNamesContent}></div>

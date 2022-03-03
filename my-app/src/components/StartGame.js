@@ -37,7 +37,10 @@ const StartGame = ({ handleBoardChange, isGamePaused, handlePause }) => {
         <div className="size-selection-container">
           <select
             className="row-col-selection"
-            onChange={(e) => setSelection(e.target.value)}
+            onChange={(e) => {
+              setSelection(e.target.value);
+              e.target.blur();
+            }}
           >
             <option value={0}></option>
             <option value={7}>7 x 7</option>
@@ -54,7 +57,10 @@ const StartGame = ({ handleBoardChange, isGamePaused, handlePause }) => {
             max="1000"
             step="250"
             value={difficultyLevel}
-            onChange={(e) => handleDifficultyLevel(e.target.value)}
+            onChange={(e) => {
+              handleDifficultyLevel(e.target.value);
+              e.target.blur();
+            }}
           />
           <label>Easy</label>
         </div>

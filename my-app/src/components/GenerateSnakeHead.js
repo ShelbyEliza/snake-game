@@ -1,6 +1,12 @@
 import ControlDirection from "./ControlDirection";
 
-const GetSnakeHead = (prevHeadRef, inputDirection, rows, length, cellsRef) => {
+const GenerateSnakeHead = (
+  prevHeadRef,
+  inputDirection,
+  rows,
+  length,
+  cellsRef
+) => {
   let snakeHeadId = ControlDirection(
     prevHeadRef.current,
     inputDirection,
@@ -11,4 +17,4 @@ const GetSnakeHead = (prevHeadRef, inputDirection, rows, length, cellsRef) => {
   return cellsRef.current.find((cell) => cell.id === snakeHeadId);
 };
 
-export default GetSnakeHead;
+export default GenerateSnakeHead;

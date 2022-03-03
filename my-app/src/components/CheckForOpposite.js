@@ -1,16 +1,20 @@
 const CheckForOpposite = (previous, current) => {
-  let checkedDirection = current;
+  const acceptedCodes = ["KeyW", "KeyD", "KeyS", "KeyA"];
 
-  if (
-    (previous === "ArrowUp" && current === "ArrowDown") ||
-    (previous === "ArrowDown" && current === "ArrowUp") ||
-    (previous === "ArrowLeft" && current === "ArrowRight") ||
-    (previous === "ArrowRight" && current === "ArrowLeft")
-  ) {
-    checkedDirection = previous;
+  if (!acceptedCodes.includes(current)) {
+    return previous;
   }
 
-  return checkedDirection;
+  if (
+    (previous === "KeyW" && current === "KeyS") ||
+    (previous === "KeyS" && current === "KeyW") ||
+    (previous === "KeyA" && current === "KeyD") ||
+    (previous === "KeyD" && current === "KeyA")
+  ) {
+    return previous;
+  } else {
+    return current;
+  }
 };
 
 export default CheckForOpposite;

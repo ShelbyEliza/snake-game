@@ -6,13 +6,13 @@ import GameStatus from "./components/GameStatus";
 import Modal from "./components/Modal";
 
 function App() {
-  const [rows, setRows] = useState();
-  const [cols, setCols] = useState();
-  const [board, setBoard] = useState([]);
+  const { changePauseState, changeScore } = useStatus();
+
   const [isGamePaused, setIsGamePaused] = useState(true);
   const [isGameLost, setIsGameLost] = useState(false);
   const [isGameWon, setIsGameWon] = useState(false);
-  const { changePauseState, changeScore } = useStatus();
+  const [rows, setRows] = useState();
+  const [board, setBoard] = useState([]);
   const [initialHead, setInitialHead] = useState();
   const [initialFood, setInitialFood] = useState();
   const [resetToggle, setResetToggle] = useState();
@@ -28,7 +28,7 @@ function App() {
       let id = 1;
 
       for (let row = 1; row < rows + 1; row++) {
-        for (let col = 1; col < cols + 1; col++) {
+        for (let col = 1; col < rows + 1; col++) {
           grid.push({
             row,
             col,
@@ -45,13 +45,12 @@ function App() {
       setInitialFood(grid[initialFood]);
       setBoard(grid);
     }
-  }, [rows, cols, resetToggle]);
+  }, [rows, resetToggle]);
 
   const handleBoardChange = (size) => {
     let target = parseInt(size);
 
     setRows(target);
-    setCols(target);
   };
   const handlePause = () => {
     if (isGamePaused) {

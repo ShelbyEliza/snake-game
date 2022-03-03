@@ -76,21 +76,17 @@ option {
   font-weight: 600;
 
   border-radius: 50%;
-  border-right: 2px solid floralwhite;
-  border-bottom: 3px solid floralwhite;
-  border-top: none;
-  border-left: none;
+  border-top: 0.1em solid floralwhite;
+  border-left: 0.1em solid floralwhite;
+  border-right: 0.2em solid floralwhite;
+  border-bottom: 0.25em solid floralwhite;
+  /* border-top: none;
+  border-left: none; */
 
   cursor: pointer;
 }
 
 .StartGame button:hover {
   background: rgb(95, 57, 155);
-  border: 3px solid rgb(173, 171, 165);
-  /* border-left: 0.5px solid rgb(173, 171, 165);
-  border-top: 0.5px solid rgb(173, 171, 165);
-  border-right: 0.5px solid rgb(173, 171, 165);
-  border-bottom: 0.5px solid rgb(173, 171, 165); */
-  /* border-bottom: none;
-  border-right: none; */
+  border: 2px solid rgb(173, 171, 165);
 }
