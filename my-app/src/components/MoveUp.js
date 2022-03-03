@@ -1,4 +1,7 @@
+import { useStatus } from "../hooks/useStatus";
+
 const MoveUp = (headID, rows) => {
+  // const { dimensions } = useStatus();
   const moveToBottom = rows * (rows - 1);
   // console.log(headID);
   const rowAbove = headID - rows;

@@ -4,6 +4,8 @@ export const StatusContext = createContext();
 
 const statusReducer = (state, action) => {
   switch (action.type) {
+    case "CHANGE_DIMENSIONS":
+      return { ...state, dimensions: action.payload };
     case "CHANGE_SCORE":
       return { ...state, score: action.payload };
     case "CHANGE_RESET_REQUEST":
@@ -19,12 +21,16 @@ const statusReducer = (state, action) => {
 
 export function StatusProvider({ children }) {
   const [state, dispatch] = useReducer(statusReducer, {
+    dimensions: 0,
     score: 0,
     resetRequest: false,
     pauseState: true,
     difficultyLevel: 1000,
   });
 
+  const changeDimensions = (dimensions) => {
+    dispatch({ type: "CHANGE_DIMENSIONS", payload: dimensions });
+  };
   const changeScore = (score) => {
     dispatch({ type: "CHANGE_SCORE", payload: score });
   };
@@ -42,6 +48,7 @@ export function StatusProvider({ children }) {
     <StatusContext.Provider
       value={{
         ...state,
+        changeDimensions,
         changeScore,
         changeResetRequest,
         changePauseState,

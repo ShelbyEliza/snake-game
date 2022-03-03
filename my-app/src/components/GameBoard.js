@@ -21,7 +21,7 @@ const GameBoard = ({
 }) => {
   const [isGameLost, setIsGameLost] = useState(false);
   const [isGameWon, setIsGameWon] = useState(false);
-  const { pauseState, changeScore } = useStatus();
+  const { dimensions, pauseState, changeScore } = useStatus();
   const { timer } = useTimer();
 
   const [inputDirection, setInputDirection] = useState("KeyS");
@@ -48,10 +48,10 @@ const GameBoard = ({
 
       setInputDirection("KeyS");
       setLength(board.length);
-      setSize(rows * 60);
+      setSize(dimensions * 60);
       setCells(deepBoard);
     }
-  }, [board, rows, length, initialHead, initialFood]);
+  }, [board, dimensions, length, initialHead, initialFood]);
 
   // function assesses keyup event:
   const handleDirection = useCallback(
@@ -145,7 +145,7 @@ const GameBoard = ({
       prevHeadRef.current = newSnakeHead.current;
       setCells(cellsArray);
     }
-  }, [timer, rows, length, changeScore]);
+  }, [timer, length, changeScore]);
 
   useEffect(() => {
     if (isGameLost) {

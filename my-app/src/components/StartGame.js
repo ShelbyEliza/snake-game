@@ -4,6 +4,8 @@ import { useStatus } from "../hooks/useStatus";
 
 const StartGame = ({ handleBoardChange }) => {
   const {
+    // dimensions,
+    // changeDimensions,
     pauseState,
     changePauseState,
     difficultyLevel,
@@ -22,9 +24,20 @@ const StartGame = ({ handleBoardChange }) => {
     changeDifficultyLevel(level);
   };
 
-  useEffect(() => {
-    handleBoardChange(selection);
-  }, [selection, handleBoardChange]);
+  // useEffect(() => {
+  //   handleBoardChange(selection);
+  // }, [selection, handleBoardChange]);
+
+  // const modifyDimensions = (size) => {
+  //   let target = parseInt(size);
+  //   changeDimensions(target);
+
+  //   logDimensions();
+  // };
+
+  // const logDimensions = () => {
+  //   console.log(dimensions);
+  // };
 
   const handlePause = () => {
     if (pauseState) {
@@ -54,6 +67,8 @@ const StartGame = ({ handleBoardChange }) => {
             className="row-col-selection"
             onChange={(e) => {
               setSelection(e.target.value);
+              handleBoardChange(e.target.value);
+              // modifyDimensions(e.target.value);
               e.target.blur();
             }}
           >

@@ -6,7 +6,8 @@ import GameStatus from "./components/GameStatus";
 import Modal from "./components/Modal";
 
 function App() {
-  const { changePauseState, changeScore } = useStatus();
+  const { dimensions, changeDimensions, changePauseState, changeScore } =
+    useStatus();
 
   const [isGameLost, setIsGameLost] = useState(false);
   const [isGameWon, setIsGameWon] = useState(false);
@@ -15,19 +16,21 @@ function App() {
   const [initialHead, setInitialHead] = useState();
   const [initialFood, setInitialFood] = useState();
   const [resetToggle, setResetToggle] = useState();
+  // console.log(dimensions);
 
   useEffect(() => {
-    if (rows !== 0 && rows !== undefined) {
-      const totalCells = rows * rows;
+    if (dimensions !== 0 && dimensions !== undefined) {
+      // console.log(dimensions);
+      const totalCells = dimensions * dimensions;
       const midGrid = Math.floor(totalCells / 2);
-      const initialFood = midGrid + rows + rows;
+      const initialFood = midGrid + dimensions + dimensions;
 
       let grid = [];
       let status = "notSnake";
       let id = 1;
 
-      for (let row = 1; row < rows + 1; row++) {
-        for (let col = 1; col < rows + 1; col++) {
+      for (let row = 1; row < dimensions + 1; row++) {
+        for (let col = 1; col < dimensions + 1; col++) {
           grid.push({
             row,
             col,
@@ -44,12 +47,19 @@ function App() {
       setInitialFood(grid[initialFood]);
       setBoard(grid);
     }
-  }, [rows, resetToggle]);
+  }, [dimensions, resetToggle]);
+
+  // const handleBoardChange = (size) => {
+  //   let target = parseInt(size);
+
+  //   setRows(target);
+  // };
 
   const handleBoardChange = (size) => {
     let target = parseInt(size);
 
     setRows(target);
+    changeDimensions(target);
   };
 
   const handleGameOver = (isGameLost, isGameWon) => {

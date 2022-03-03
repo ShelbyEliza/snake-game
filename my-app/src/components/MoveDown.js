@@ -1,13 +1,15 @@
-const MoveDown = (headID, rows, length) => {
-  // console.log(headID);
+import { useStatus } from "../hooks/useStatus";
+
+const MoveDown = (headID, length, rows) => {
+  // const { dimensions } = useStatus();
+  // console.log(dimensions);
+
   const moveToTop = rows * (rows - 1);
   const rowBelow = headID + rows;
 
   if (rowBelow <= length) {
-    // console.log("Going Down");
     return headID + rows;
   } else {
-    // console.log("To the Top");
     return headID - moveToTop;
   }
 };

@@ -1,4 +1,7 @@
+import { useStatus } from "../hooks/useStatus";
+
 const MoveRight = (headID, rows) => {
+  // const { dimensions } = useStatus();
   const moveToFront = headID - (rows - 1);
   // console.log(headID);
 

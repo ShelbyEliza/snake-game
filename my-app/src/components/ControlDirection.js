@@ -1,26 +1,26 @@
-import MoveUp from "./directions/MoveUp";
-import MoveRight from "./directions/MoveRight";
-import MoveDown from "./directions/MoveDown";
-import MoveLeft from "./directions/MoveLeft";
+import MoveUp from "./MoveUp";
+import MoveRight from "./MoveRight";
+import MoveDown from "./MoveDown";
+import MoveLeft from "./MoveLeft";
 
 const ControlDirection = (prevHeadRef, inputDirection, rows, length) => {
   let newHeadID;
 
   switch (inputDirection) {
     case "KeyW":
-      newHeadID = MoveUp(prevHeadRef.id, rows, length);
+      newHeadID = MoveUp(prevHeadRef.id, rows);
       break;
     case "KeyD":
-      newHeadID = MoveRight(prevHeadRef.id, rows, length);
+      newHeadID = MoveRight(prevHeadRef.id, rows);
       break;
     case "KeyS":
-      newHeadID = MoveDown(prevHeadRef.id, rows, length);
+      newHeadID = MoveDown(prevHeadRef.id, length, rows);
       break;
     case "KeyA":
-      newHeadID = MoveLeft(prevHeadRef.id, rows, length);
+      newHeadID = MoveLeft(prevHeadRef.id, rows);
       break;
     default:
-      newHeadID = MoveDown(prevHeadRef.id, rows, length);
+      newHeadID = MoveDown(prevHeadRef.id, length, rows);
   }
   return newHeadID;
 };

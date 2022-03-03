@@ -1,0 +1,29 @@
+/* .BoardInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  margin: auto;
+  width: 600px;
+
+  color: floralwhite;
+  background: rgb(61, 24, 121);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding-bottom: 4px;
+
+}
+
+.board-data {
+  display: flex;
+  padding: 0px 10px 4px 10px;
+  background: rgb(41, 15, 82);
+  border-bottom: 2px solid rgb(55, 12, 126);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+
+}
+
+.BoardInfo .data {
+  padding-left: 10px;
+} */
