@@ -15,15 +15,14 @@ const _ = require("lodash");
 const GameBoard = ({
   board,
   rows,
-  isGamePaused,
   initialHead,
   initialFood,
   handleGameOver,
 }) => {
   const [isGameLost, setIsGameLost] = useState(false);
   const [isGameWon, setIsGameWon] = useState(false);
-  const { changeScore } = useStatus();
-  const { timer } = useTimer(isGamePaused);
+  const { pauseState, changeScore } = useStatus();
+  const { timer } = useTimer();
 
   const [inputDirection, setInputDirection] = useState("KeyS");
   const [size, setSize] = useState();
@@ -57,14 +56,13 @@ const GameBoard = ({
   // function assesses keyup event:
   const handleDirection = useCallback(
     (e) => {
-      if (!isGamePaused) {
-        // console.log(e.code);
+      if (!pauseState) {
         if (inputDirection !== e.code) {
           setInputDirection(CheckForOpposite(inputDirection, e.code));
         }
       }
     },
-    [inputDirection, isGamePaused]
+    [inputDirection, pauseState]
   );
 
   useEffect(() => {

@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
 import { useStatus } from "./useStatus";
 
-export const useTimer = (isGamePaused) => {
+export const useTimer = () => {
   const [timer, setTimer] = useState(0);
-  const { difficultyLevel } = useStatus();
+  const { pauseState, difficultyLevel } = useStatus();
 
   useEffect(() => {
     const id = setInterval(() => {
-      if (!isGamePaused) {
+      if (!pauseState) {
         setTimer((c) => c + 1);
       }
     }, difficultyLevel);
 
     return () => clearInterval(id);
-  }, [isGamePaused, difficultyLevel]);
+  }, [pauseState, difficultyLevel]);
 
   return { timer };
 };

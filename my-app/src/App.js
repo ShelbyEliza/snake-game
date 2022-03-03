@@ -8,7 +8,6 @@ import Modal from "./components/Modal";
 function App() {
   const { changePauseState, changeScore } = useStatus();
 
-  const [isGamePaused, setIsGamePaused] = useState(true);
   const [isGameLost, setIsGameLost] = useState(false);
   const [isGameWon, setIsGameWon] = useState(false);
   const [rows, setRows] = useState();
@@ -52,19 +51,9 @@ function App() {
 
     setRows(target);
   };
-  const handlePause = () => {
-    if (isGamePaused) {
-      setIsGamePaused(false);
-      changePauseState(false);
-    }
-    if (isGamePaused === false) {
-      setIsGamePaused(true);
-      changePauseState(true);
-    }
-  };
 
   const handleGameOver = (isGameLost, isGameWon) => {
-    setIsGamePaused(true);
+    changePauseState(true);
     if (isGameLost) {
       setIsGameLost(true);
     }
@@ -87,11 +76,7 @@ function App() {
 
   return (
     <div className="App">
-      <StartGame
-        handleBoardChange={handleBoardChange}
-        isGamePaused={isGamePaused}
-        handlePause={handlePause}
-      />
+      <StartGame handleBoardChange={handleBoardChange} />
       {(isGameLost || isGameWon) && (
         <Modal>
           <GameStatus
@@ -105,7 +90,6 @@ function App() {
         <GameBoard
           board={board}
           rows={rows}
-          isGamePaused={isGamePaused}
           initialHead={initialHead}
           initialFood={initialFood}
           handleGameOver={handleGameOver}

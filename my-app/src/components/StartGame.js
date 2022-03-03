@@ -2,10 +2,16 @@ import "../css/StartGame.css";
 import { useEffect, useState } from "react";
 import { useStatus } from "../hooks/useStatus";
 
-const StartGame = ({ handleBoardChange, isGamePaused, handlePause }) => {
-  const [selection, setSelection] = useState(0);
-  const { difficultyLevel, changeDifficultyLevel, score } = useStatus();
+const StartGame = ({ handleBoardChange }) => {
+  const {
+    pauseState,
+    changePauseState,
+    difficultyLevel,
+    changeDifficultyLevel,
+    score,
+  } = useStatus();
 
+  const [selection, setSelection] = useState(0);
   let styleSpacing = "center";
 
   if (selection) {
@@ -19,6 +25,15 @@ const StartGame = ({ handleBoardChange, isGamePaused, handlePause }) => {
   useEffect(() => {
     handleBoardChange(selection);
   }, [selection, handleBoardChange]);
+
+  const handlePause = () => {
+    if (pauseState) {
+      changePauseState(false);
+    }
+    if (pauseState === false) {
+      changePauseState(true);
+    }
+  };
 
   return (
     <div
@@ -68,8 +83,8 @@ const StartGame = ({ handleBoardChange, isGamePaused, handlePause }) => {
       {selection !== 0 && (
         <div className="conditional">
           <div className="button-container display-data">
-            {isGamePaused && <button onClick={handlePause}>Start!</button>}
-            {!isGamePaused && <button onClick={handlePause}>Pause!</button>}
+            {pauseState && <button onClick={handlePause}>Start!</button>}
+            {!pauseState && <button onClick={handlePause}>Pause!</button>}
           </div>
         </div>
       )}
