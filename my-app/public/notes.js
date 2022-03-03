@@ -1,205 +1,139 @@
-// import React from "react";
-// import { useState } from "react";
-// // import GameBoard from "./GameBoard";
-// import BoardSelection from "./BoardSelection";
-// import Cell from "./Cell";
+// import { useState, useEffect, useCallback, useMemo } from "react";
+// import { useStatus } from "./hooks/useStatus";
+// import StartGame from "./components/StartGame";
+// import GameBoard from "./components/GameBoard";
+// import GameStatus from "./components/GameStatus";
+// import Modal from "./components/Modal";
 
-// const RenderGameBoard = (props) => {
+// function App() {
+//   const { changeDifficultyLevel, changePauseState, changeScore } = useStatus();
 //   const [rows, setRows] = useState();
 //   const [cols, setCols] = useState();
+//   const [isGamePaused, setIsGamePaused] = useState(true);
+//   const [isGameLost, setIsGameLost] = useState(false);
+//   const [isGameWon, setIsGameWon] = useState(false);
+//   const [difficulty, setDifficulty] = useState(1000);
+//   const [resetToggle, setResetToggle] = useState();
 
-//   // let size = 300;
-//   let size;
+//   const createBoard = useCallback(() => {
+//     const boardData = {};
+//     if (rows) {
+//       const totalCells = rows * rows;
+//       const midGridID = Math.floor(totalCells / 2);
+//       const initialFoodID = midGridID + rows + rows;
 
-//   const gameBoard = new Array(rows);
+//       let grid = [];
+//       let status = "notSnake";
+//       let id = 1;
 
-//   for (var i = 0; i < gameBoard.length; i++) {
-//     gameBoard[i] = new Array(cols);
+//       for (let row = 1; row < rows + 1; row++) {
+//         for (let col = 1; col < cols + 1; col++) {
+//           grid.push({
+//             row,
+//             col,
+//             status,
+//             id,
+//           });
+//           id++;
+//         }
+//       }
+//       grid[midGridID].status = "isSnakeHead";
+//       grid[initialFoodID].status = "isFood";
+
+//       boardData.board = grid;
+//       boardData.initialFood = grid[initialFoodID];
+//       boardData.initialHead = grid[midGridID];
+//     }
+
+//     console.log(rows);
+//     return boardData;
+//   }, [rows, cols]);
+
+//   const boardData = useMemo(() => createBoard(), [createBoard]);
+
+//   if (rows) {
+//     console.log(boardData);
 //   }
 
-//   var counterRow = -1;
-//   var spliceValue = 0;
-
-//   for (let row = 0; row < rows; row++) {
-//     counterRow++;
-//     for (let col = 0; col < cols; col++) {
-//       if (spliceValue === rows) {
-//         spliceValue = 0;
-//       }
-
-//       if (counterRow === row) {
-//         // let cell = (
-//         //   <div
-//         //     id={row.toString() + "-" + col.toString()}
-//         //     className="cell"
-//         //     key={row.toString() + "-" + col.toString()}
-//         //   >
-//         //     {row + 1}, {col + 1}
-//         //   </div>
-//         // );
-//         // let cell = <Cell row={row} col={col} />;
-
-//         gameBoard[row].splice(spliceValue, 1, <Cell row={row} col={col} />);
-//         spliceValue++;
-//       }
+//   useEffect(() => {
+//     if (rows) {
+//       createBoard();
 //     }
-//   }
+//   }, [rows, cols, resetToggle, createBoard]);
 
-//   const changeSize = (rows) => {
-//     // gameBoard width = number of rows/cols * width of cells;
-//     if (rows === 6) {
-//       size = 300;
-//     }
-//     if (rows === 7) {
-//       size = 350;
-//     }
-//     if (rows === 8) {
-//       size = 400;
-//     }
-//     return size;
-//   };
-
-//   return (
-//     <div className="container">
-//       <BoardSelection
-//         rows={rows}
-//         cols={cols}
-//         setCols={setCols}
-//         setRows={setRows}
-//       />
-//       {/* <GameBoard /> */}
-//       <div
-//         className="gameBoard"
-//         style={{ width: changeSize(rows), height: changeSize(rows) }}
-//       >
-//         {gameBoard}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default RenderGameBoard;
-
-////////////////////////////////// BoardSelection:
-
-// import { useState } from "react";
-// import RenderGameBoard from "./RenderGameBoard";
-
-// const BoardSelection = () => {
-//   const [rows, setRows] = useState();
-//   const [cols, setCols] = useState();
-//   const [isSelected, setIsSelected] = false;
-
-//   const handleBoardChange = (e) => {
-//     let target = parseInt(e.target.value);
+//   const handleBoardChange = (size) => {
+//     let target = parseInt(size);
 
 //     setRows(target);
 //     setCols(target);
-//     setIsSelected(true);
+//   };
+//   const handlePause = () => {
+//     if (isGamePaused) {
+//       setIsGamePaused(false);
+//       changePauseState(false);
+//     }
+//     if (isGamePaused === false) {
+//       setIsGamePaused(true);
+//       changePauseState(true);
+//     }
+//   };
+
+//   const handleDifficultyLevel = (level) => {
+//     changeDifficultyLevel(-level);
+//   };
+
+//   const handleGameOver = (isGameLost, isGameWon) => {
+//     setIsGamePaused(true);
+//     if (isGameLost) {
+//       setIsGameLost(true);
+//     }
+//     if (isGameWon) {
+//       setIsGameWon(true);
+//     }
+//   };
+
+//   const handleReset = () => {
+//     changeScore(0);
+//     if (resetToggle) {
+//       setResetToggle(0);
+//     } else {
+//       setResetToggle(1);
+//     }
+//     setIsGameLost(false);
+//     setIsGameWon(false);
+//     console.log("Resetting");
 //   };
 
 //   return (
-//     <div className="form-container">
-//       <form>
-//         <label>Pick Your GameBoard Size:</label>
-//         <select
-//           className="row-col-selection"
-//           // value={rows}
-//           onChange={(e) => handleBoardChange(e)}
-//         >
-//           {/* <option value={0}></option> */}
-//           <option value={6}>6 x 6</option>
-//           <option value={7}>7 x 7</option>
-//           <option value={8}>8 x 8</option>
-//         </select>
-//       </form>
-//       <div className="gameBoard-title">GameBoard: Ready to Play!</div>
-//       {isSelected === true && <RenderGameBoard rows={rows} cols={cols} />}
+//     <div className="App">
+//       <StartGame
+//         handleBoardChange={handleBoardChange}
+//         isGamePaused={isGamePaused}
+//         handlePause={handlePause}
+//         handleDifficultyLevel={handleDifficultyLevel}
+//         difficulty={difficulty}
+//       />
+//       {(isGameLost || isGameWon) && (
+//         <Modal>
+//           <GameStatus
+//             handleReset={handleReset}
+//             isGameLost={isGameLost}
+//             isGameWon={isGameWon}
+//           />
+//         </Modal>
+//       )}
+//       {rows && (
+//         <GameBoard
+//           board={boardData.board}
+//           rows={rows}
+//           isGamePaused={isGamePaused}
+//           initialHead={boardData.initialHead}
+//           initialFood={boardData.initialFood}
+//           handleGameOver={handleGameOver}
+//         />
+//       )}
 //     </div>
 //   );
-// };
-
-// export default BoardSelection;
-
-///////////////////////////////////////// RenderGameBoard:
-
-// import React from "react";
-// import GameBoard from "./GameBoard";
-
-// const RenderGameBoard = (props) => {
-//   let size;
-
-//   const changeSize = (rows) => {
-//     // gameBoard width = number of rows/cols * width of cells;
-//     if (rows === 6) {
-//       size = 300;
-//     }
-//     if (rows === 7) {
-//       size = 350;
-//     }
-//     if (rows === 8) {
-//       size = 400;
-//     }
-//     return size;
-//   };
-
-//   return (
-//     <div className="game-board-container">
-//       <GameBoard style={{ width: changeSize(props.rows), height: changeSize(props.rows) }}
-//       rows={props.rows}/>
-//     </div>
-//   );
-// };
-
-// export default RenderGameBoard;
-
-///////////////////////////////// GameBoard:
-
-// import Cell from "./Cell";
-
-// const GameBoard = (props) => {
-//   const gameBoard = new Array(props.rows);
-
-//   for (var i = 0; i < gameBoard.length; i++) {
-//     gameBoard[i] = new Array(props.rows);
-//   }
-
-//   const renderCells = (cell) => {
-//   var counterRow = -1;
-//   var spliceValue = 0;
-
-//   for (let row = 0; row < props.rows; row++) {
-//     counterRow++;
-//     for (let col = 0; col < props.cols; col++) {
-//       if (spliceValue === props.rows) {
-//         spliceValue = 0;
-//       }
-
-//       if (counterRow === row) {
-//         // let cell = (
-//         //   <div
-//         //     id={row.toString() + "-" + col.toString()}
-//         //     className="cell"
-//         //     key={row.toString() + "-" + col.toString()}
-//         //   >
-//         //     {row + 1}, {col + 1}
-//         //   </div>
-//         // );
-
-//         // gameBoard[row].splice(spliceValue, 1, <Cell row={row} col={col} />);
-//         gameBoard[row].splice(spliceValue, 1, cell);
-//         spliceValue++;
-//       }
-//     }
-//   }
-//   return
 // }
 
-//   return (
-//     <div className="gameBoard">
-//       {renderCells(<Cell />)}
-//     </div>
-//   )
-// };
-
-// export default GameBoard;
+// export default App;

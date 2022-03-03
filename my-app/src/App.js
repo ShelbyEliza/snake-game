@@ -1,86 +1,110 @@
-import TitleBar from "./TitleBar";
-import Cell from "./Cell";
-import GenerateFood from "./GenerateFood";
 import { useState, useEffect } from "react";
-import UpdateBoard from "./UpdateBoard";
+import { useStatus } from "./hooks/useStatus";
+import StartGame from "./components/StartGame";
+import GameBoard from "./components/GameBoard";
+import GameStatus from "./components/GameStatus";
+import Modal from "./components/Modal";
 
 function App() {
-  const [rows, setRows] = useState(11);
-  const [cols, setCols] = useState(11);
-  const [totalCells, setTotalCells] = useState(rows * rows);
-  const [midGrid, setMidGrid] = useState(Math.floor(totalCells / 2));
-  const [initialFood, setInitialFood] = useState(midGrid + rows + cols);
+  const { dimensions, changeDimensions, changePauseState, changeScore } =
+    useStatus();
+
+  const [isGameLost, setIsGameLost] = useState(false);
+  const [isGameWon, setIsGameWon] = useState(false);
+  const [rows, setRows] = useState();
   const [board, setBoard] = useState([]);
-  const [status, setStatus] = useState("notSnake");
-  const [snake, setSnake] = useState([]);
-  const [snakeHead, setSnakeHead] = useState();
-  const [direction, setDirection] = useState("down");
+  const [initialHead, setInitialHead] = useState();
+  const [initialFood, setInitialFood] = useState();
+  const [resetToggle, setResetToggle] = useState();
+  // console.log(dimensions);
 
-  const buildBoard = () => {
-    let grid = [];
+  useEffect(() => {
+    if (dimensions !== 0 && dimensions !== undefined) {
+      // console.log(dimensions);
+      const totalCells = dimensions * dimensions;
+      const midGrid = Math.floor(totalCells / 2);
+      const initialFood = midGrid + dimensions + dimensions;
 
-    for (let row = 0; row < rows; row++) {
-      for (let col = 0; col < cols; col++) {
-        grid.push({
-          row,
-          col,
-          status,
-        });
+      let grid = [];
+      let status = "notSnake";
+      let id = 1;
+
+      for (let row = 1; row < dimensions + 1; row++) {
+        for (let col = 1; col < dimensions + 1; col++) {
+          grid.push({
+            row,
+            col,
+            status,
+            id,
+          });
+          id++;
+        }
       }
+      grid[midGrid].status = "isSnakeHead";
+      grid[initialFood].status = "isFood";
+
+      setInitialHead(grid[midGrid]);
+      setInitialFood(grid[initialFood]);
+      setBoard(grid);
     }
+  }, [dimensions, resetToggle]);
 
-    grid[midGrid].status = "isSnake";
-    grid[initialFood].status = "isFood";
+  // const handleBoardChange = (size) => {
+  //   let target = parseInt(size);
 
-    setBoard(grid);
-    console.log("Board Built");
-  };
-
-  const addToSnake = () => {
-    let snakeArray = board.filter(
-      (cell) => cell.status === "isSnake" || cell.status === "snakeHead"
-    );
-
-    setSnake(snakeArray);
-    setSnakeHead(snakeArray[0]);
-  };
-
-  // const moveSnake = () => {
-  //   setSnakeHead(snake[0]);
-  //   console.log(snakeHead);
-  //   // console.log(board);
+  //   setRows(target);
   // };
 
-  useEffect(() => {
-    buildBoard();
-  }, []);
+  const handleBoardChange = (size) => {
+    let target = parseInt(size);
 
-  useEffect(() => {
-    addToSnake();
-  }, []);
+    setRows(target);
+    changeDimensions(target);
+  };
 
-  useEffect(() => {
-    board.length > 0 && GenerateFood(board, totalCells);
+  const handleGameOver = (isGameLost, isGameWon) => {
+    changePauseState(true);
+    if (isGameLost) {
+      setIsGameLost(true);
+    }
+    if (isGameWon) {
+      setIsGameWon(true);
+    }
+  };
 
-    snakeHead && setBoard(UpdateBoard(board, snakeHead));
-  }, [snakeHead, snake]);
+  const handleReset = () => {
+    changeScore(0);
+    if (resetToggle) {
+      setResetToggle(0);
+    } else {
+      setResetToggle(1);
+    }
+    setIsGameLost(false);
+    setIsGameWon(false);
+    console.log("Resetting");
+  };
 
   return (
     <div className="App">
-      <TitleBar></TitleBar>
-      <div className="content">
-        {board && (
-          <div className="game-board">
-            {board.map((cell) => (
-              <Cell
-                key={cell.row.toString() + "-" + cell.col.toString()}
-                cell={cell}
-                status={cell.status}
-              ></Cell>
-            ))}
-          </div>
-        )}
-      </div>
+      <StartGame handleBoardChange={handleBoardChange} />
+      {(isGameLost || isGameWon) && (
+        <Modal>
+          <GameStatus
+            handleReset={handleReset}
+            isGameLost={isGameLost}
+            isGameWon={isGameWon}
+          />
+        </Modal>
+      )}
+      {initialHead && board && (
+        <GameBoard
+          board={board}
+          rows={rows}
+          initialHead={initialHead}
+          initialFood={initialFood}
+          handleGameOver={handleGameOver}
+        />
+      )}
     </div>
   );
 }

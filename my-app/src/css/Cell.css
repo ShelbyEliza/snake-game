@@ -1,0 +1,97 @@
+.cell {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 60px;
+  height: 60px;
+
+  font-size: 18px;
+  color: rgb(63, 224, 157);
+  white-space: nowrap;
+
+  background: rgb(84, 13, 199);
+
+  outline: 1px solid rgb(41, 15, 82);
+}
+
+.content.isFood {
+  background: floralwhite;
+
+  width: 20px;
+  height: 20px;
+  position: relative;
+  text-align: center;
+
+  border-radius: 20%;
+}
+.content.isFood:before,
+.content.isFood:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  border-radius: 20%;
+
+  background: floralwhite;
+}
+.content.isFood:before {
+  transform: rotate(30deg);
+}
+.content.isFood:after {
+  transform: rotate(60deg);
+}
+.content.isSnake {
+  display: flex;
+
+  width: 50%;
+  height: 50%;
+
+  padding: 4px;
+
+  border-radius: 50%;
+  /* background: rgb(63, 18, 52); */
+  /* background: rgb(141, 153, 90); */
+  background: rgb(182, 126, 138);
+}
+
+.content.isSnakeHead {
+  width: 0px;
+  height: 0px;
+  border-color: rgb(136, 92, 112);
+  border-style: solid;
+  border-width: 20px;
+
+  border-radius: 20px;
+}
+
+.content.KeyW.isSnakeHead {
+  border-top: 20px solid transparent;
+
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.content.KeyD.isSnakeHead {
+  border-right: 20px solid transparent;
+
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.content.KeyS.isSnakeHead {
+  border-bottom: 20px solid transparent;
+
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.content.KeyA.isSnakeHead {
+  border-left: 20px solid transparent;
+
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}

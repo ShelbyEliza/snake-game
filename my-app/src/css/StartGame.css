@@ -1,0 +1,92 @@
+.StartGame {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* justify-content: space-between; */
+  /* justify-content: center; */
+
+  background: rgb(61, 24, 121);
+  color: floralwhite;
+
+  height: 80px;
+  max-width: 800px;
+  margin: auto;
+  padding: 8px;
+
+  border-radius: 10px;
+  border-bottom: 2px solid rgb(41, 15, 82);
+  border-top: 2px solid rgb(41, 15, 82);
+
+  text-align: center;
+}
+
+.StartGame .conditional {
+  padding: 0px 20px;
+  width: 100px;
+  margin: 0px 20px;
+}
+
+.StartGame .score-label {
+  border: 2px solid floralwhite;
+  border-radius: 6px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+
+  border-bottom: none;
+
+  padding: 1px;
+  background: rgb(95, 57, 155);
+}
+.StartGame .score {
+  border: 2px solid floralwhite;
+  border-radius: 6px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+
+  padding: 1px;
+  background: rgb(95, 57, 155);
+}
+
+.StartGame select,
+option {
+  padding: 2px;
+  text-align: center;
+  color: rgb(32, 6, 73);
+}
+
+.StartGame .game-options {
+  display: flex;
+  flex-direction: column;
+}
+/* .StartGame .size-selection-container {
+  margin-bottom: 10px;
+} */
+.StartGame .difficulty-container {
+  display: flex;
+  align-items: center;
+  /* flex-direction: column; */
+}
+.StartGame button {
+  box-sizing: border-box;
+  width: 70px;
+  height: 70px;
+  background: rgb(95, 57, 155);
+
+  font-size: 14px;
+  font-weight: 600;
+
+  border-radius: 50%;
+  border-top: 0.1em solid floralwhite;
+  border-left: 0.1em solid floralwhite;
+  border-right: 0.2em solid floralwhite;
+  border-bottom: 0.25em solid floralwhite;
+  /* border-top: none;
+  border-left: none; */
+
+  cursor: pointer;
+}
+
+.StartGame button:hover {
+  background: rgb(95, 57, 155);
+  border: 2px solid rgb(173, 171, 165);
+}

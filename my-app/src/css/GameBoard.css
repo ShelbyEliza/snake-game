@@ -1,0 +1,17 @@
+.GameBoard {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: auto;
+  border: 8px solid rgb(41, 15, 82);
+  /* border: 8px solid rgb(153, 117, 69); */
+}
+.direction {
+  display: flex;
+  margin: 20px auto;
+  background: rgb(84, 13, 199);
+  border: 0;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+}
