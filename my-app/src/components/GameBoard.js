@@ -136,7 +136,6 @@ const GameBoard = ({
 
       if (ids.length === cellsArray.length - 1) {
         setIsGameWon(true);
-        console.log("Good Job");
       }
 
       cellsRef.current = cellsArray;
