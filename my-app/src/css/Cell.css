@@ -53,8 +53,6 @@
   padding: 4px;
 
   border-radius: 50%;
-  /* background: rgb(63, 18, 52); */
-  /* background: rgb(141, 153, 90); */
   background: rgb(182, 126, 138);
 }
 
@@ -68,28 +66,28 @@
   border-radius: 20px;
 }
 
-.content.KeyW.isSnakeHead {
+.content.ArrowUp.isSnakeHead {
   border-top: 20px solid transparent;
 
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
 }
 
-.content.KeyD.isSnakeHead {
+.content.ArrowRight.isSnakeHead {
   border-right: 20px solid transparent;
 
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
 }
 
-.content.KeyS.isSnakeHead {
+.content.ArrowDown.isSnakeHead {
   border-bottom: 20px solid transparent;
 
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
 }
 
-.content.KeyA.isSnakeHead {
+.content.ArrowLeft.isSnakeHead {
   border-left: 20px solid transparent;
 
   border-top-right-radius: 15px;

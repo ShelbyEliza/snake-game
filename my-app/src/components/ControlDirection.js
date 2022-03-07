@@ -7,16 +7,16 @@ const ControlDirection = (prevHeadRef, inputDirection, rows, length) => {
   let newHeadID;
 
   switch (inputDirection) {
-    case "KeyW":
+    case "ArrowUp":
       newHeadID = MoveUp(prevHeadRef.id, rows);
       break;
-    case "KeyD":
+    case "ArrowRight":
       newHeadID = MoveRight(prevHeadRef.id, rows);
       break;
-    case "KeyS":
+    case "ArrowDown":
       newHeadID = MoveDown(prevHeadRef.id, length, rows);
       break;
-    case "KeyA":
+    case "ArrowLeft":
       newHeadID = MoveLeft(prevHeadRef.id, rows);
       break;
     default:

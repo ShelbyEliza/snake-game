@@ -6,8 +6,7 @@ import GameStatus from "./components/GameStatus";
 import Modal from "./components/Modal";
 
 function App() {
-  const { dimensions, changeDimensions, changePauseState, changeScore } =
-    useStatus();
+  const { changeDimensions, changePauseState, changeScore } = useStatus();
 
   const [isGameLost, setIsGameLost] = useState(false);
   const [isGameWon, setIsGameWon] = useState(false);
@@ -16,21 +15,19 @@ function App() {
   const [initialHead, setInitialHead] = useState();
   const [initialFood, setInitialFood] = useState();
   const [resetToggle, setResetToggle] = useState();
-  // console.log(dimensions);
 
   useEffect(() => {
-    if (dimensions !== 0 && dimensions !== undefined) {
-      // console.log(dimensions);
-      const totalCells = dimensions * dimensions;
+    if (rows !== 0 && rows !== undefined) {
+      const totalCells = rows * rows;
       const midGrid = Math.floor(totalCells / 2);
-      const initialFood = midGrid + dimensions + dimensions;
+      const initialFood = midGrid + rows + rows;
 
       let grid = [];
       let status = "notSnake";
       let id = 1;
 
-      for (let row = 1; row < dimensions + 1; row++) {
-        for (let col = 1; col < dimensions + 1; col++) {
+      for (let row = 1; row < rows + 1; row++) {
+        for (let col = 1; col < rows + 1; col++) {
           grid.push({
             row,
             col,
@@ -47,19 +44,12 @@ function App() {
       setInitialFood(grid[initialFood]);
       setBoard(grid);
     }
-  }, [dimensions, resetToggle]);
-
-  // const handleBoardChange = (size) => {
-  //   let target = parseInt(size);
-
-  //   setRows(target);
-  // };
+  }, [rows, resetToggle]);
 
   const handleBoardChange = (size) => {
     let target = parseInt(size);
 
     setRows(target);
-    changeDimensions(target);
   };
 
   const handleGameOver = (isGameLost, isGameWon) => {
@@ -74,6 +64,8 @@ function App() {
 
   const handleReset = () => {
     changeScore(0);
+    setRows(0);
+    changeDimensions(0);
     if (resetToggle) {
       setResetToggle(0);
     } else {
@@ -81,7 +73,6 @@ function App() {
     }
     setIsGameLost(false);
     setIsGameWon(false);
-    console.log("Resetting");
   };
 
   return (

@@ -10,37 +10,7 @@
   padding: 40px;
   max-width: 400px;
   margin: 250px auto;
-  background: burlywood;
+  background: rgb(136, 92, 112);
   color: rgb(49, 33, 12);
   border-radius: 10px;
 }
-/* .modal-title {
-  margin-bottom: 20px;
-}
-.modal-text {
-  padding-bottom: 10px;
-}
-.modal-link {
-  color: rgba(82, 99, 148);
-}
-.modal-button {
-  background: rgb(47, 58, 87);
-  color: whitesmoke;
-  border: 0;
-  border-radius: 6px;
-  padding: 6px 10px;
-  cursor: pointer;
-}
-.modal-button-sales {
-  margin-top: 18px;
-  background: rgb(87, 50, 112);
-  color: whitesmoke;
-  border: 0;
-  border-radius: 6px;
-  padding: 10px;
-  cursor: pointer;
-  text-transform: uppercase;
-}
-.modal h2 {
-  border-bottom: 1px solid rgb(47, 58, 87);
-} */

@@ -21,10 +21,10 @@ const GameBoard = ({
 }) => {
   const [isGameLost, setIsGameLost] = useState(false);
   const [isGameWon, setIsGameWon] = useState(false);
-  const { dimensions, pauseState, changeScore } = useStatus();
+  const { pauseState, changeScore } = useStatus();
   const { timer } = useTimer();
 
-  const [inputDirection, setInputDirection] = useState("KeyS");
+  const [inputDirection, setInputDirection] = useState("ArrowDown");
   const [size, setSize] = useState();
   const [length, setLength] = useState(board.length);
   const [cells, setCells] = useState();
@@ -46,14 +46,13 @@ const GameBoard = ({
       foodRef.current = initialFood;
       amountEatenRef.current = 0;
 
-      setInputDirection("KeyS");
+      setInputDirection("ArrowDown");
       setLength(board.length);
-      setSize(dimensions * 60);
+      setSize(rows * 60);
       setCells(deepBoard);
     }
-  }, [board, dimensions, length, initialHead, initialFood]);
+  }, [board, rows, length, initialHead, initialFood]);
 
-  // function assesses keyup event:
   const handleDirection = useCallback(
     (e) => {
       if (!pauseState) {
@@ -93,7 +92,6 @@ const GameBoard = ({
         if (cell.id === newSnakeHead.current.id) {
           if (cell.status === "isSnake") {
             setIsGameLost(true);
-            console.log("Opps, Game Over!");
           }
           if (cell.status === "isFood") {
             wasFoodEaten = true;

@@ -1,11 +1,9 @@
 import "../css/StartGame.css";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useStatus } from "../hooks/useStatus";
 
 const StartGame = ({ handleBoardChange }) => {
   const {
-    // dimensions,
-    // changeDimensions,
     pauseState,
     changePauseState,
     difficultyLevel,
@@ -24,21 +22,6 @@ const StartGame = ({ handleBoardChange }) => {
     changeDifficultyLevel(level);
   };
 
-  // useEffect(() => {
-  //   handleBoardChange(selection);
-  // }, [selection, handleBoardChange]);
-
-  // const modifyDimensions = (size) => {
-  //   let target = parseInt(size);
-  //   changeDimensions(target);
-
-  //   logDimensions();
-  // };
-
-  // const logDimensions = () => {
-  //   console.log(dimensions);
-  // };
-
   const handlePause = () => {
     if (pauseState) {
       changePauseState(false);
@@ -47,6 +30,10 @@ const StartGame = ({ handleBoardChange }) => {
       changePauseState(true);
     }
   };
+
+  useEffect(() => {
+    handleBoardChange(selection);
+  }, [selection, handleBoardChange]);
 
   return (
     <div
@@ -61,40 +48,40 @@ const StartGame = ({ handleBoardChange }) => {
           <p className="score">{score}</p>
         </div>
       )}
-      <form className="game-options">
-        <div className="size-selection-container">
-          <select
-            className="row-col-selection"
-            onChange={(e) => {
-              setSelection(e.target.value);
-              handleBoardChange(e.target.value);
-              // modifyDimensions(e.target.value);
-              e.target.blur();
-            }}
-          >
-            <option value={0}></option>
-            <option value={7}>7 x 7</option>
-            <option value={9}>9 x 9</option>
-            <option value={11}>11 x 11</option>
-          </select>
-        </div>
-        <div className="difficulty-container">
-          <label>Hard</label>
-          <input
-            type="range"
-            id="difficulty"
-            min="250"
-            max="1000"
-            step="250"
-            value={difficultyLevel}
-            onChange={(e) => {
-              handleDifficultyLevel(e.target.value);
-              e.target.blur();
-            }}
-          />
-          <label>Easy</label>
-        </div>
-      </form>
+      {pauseState && (
+        <form className="game-options">
+          <div className="size-selection-container">
+            <select
+              className="row-col-selection"
+              onChange={(e) => {
+                setSelection(e.target.value);
+                e.target.blur();
+              }}
+            >
+              <option value={0}></option>
+              <option value={7}>7 x 7</option>
+              <option value={9}>9 x 9</option>
+              <option value={11}>11 x 11</option>
+            </select>
+          </div>
+          <div className="difficulty-container">
+            <label>Hard</label>
+            <input
+              type="range"
+              id="difficulty"
+              min="250"
+              max="1000"
+              step="250"
+              value={difficultyLevel}
+              onChange={(e) => {
+                handleDifficultyLevel(e.target.value);
+                e.target.blur();
+              }}
+            />
+            <label>Easy</label>
+          </div>
+        </form>
+      )}
       {selection !== 0 && (
         <div className="conditional">
           <div className="button-container display-data">

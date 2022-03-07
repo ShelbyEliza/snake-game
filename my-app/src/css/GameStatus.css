@@ -1,5 +1,4 @@
 .GameStatus {
-  /* background: rgba(215, 205, 230, 0.822); */
   display: flex;
   justify-content: center;
   text-align: center;
@@ -11,28 +10,25 @@
 .GameStatus .score-box {
   display: flex;
   justify-content: space-around;
-  background: rgb(153, 117, 69);
+  background: rgb(182, 126, 138);
   color: floralwhite;
 
   margin: 20px 50px;
   padding: 20px 10px;
   border-radius: 10px;
 }
-/* .GameStatus .score-report {
-  padding: 30px;
-} */
 .GameStatus .reset-button {
   width: 50px;
   height: 50px;
   padding: 15px 15px;
   color: floralwhite;
 
-  background: rgb(153, 117, 69);
+  background: rgb(182, 126, 138);
 
   border-top: none;
   border-left: none;
-  border-right: 2px solid rgb(97, 65, 22);
-  border-bottom: 3px solid rgb(97, 65, 22);
+  border-right: 2px solid rgb(182, 126, 138);
+  border-bottom: 3px solid rgb(182, 126, 138);
   border-radius: 60px;
 
   font-size: 15px;

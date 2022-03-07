@@ -2,8 +2,6 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  /* justify-content: space-between; */
-  /* justify-content: center; */
 
   background: rgb(61, 24, 121);
   color: floralwhite;
@@ -58,13 +56,10 @@ option {
   display: flex;
   flex-direction: column;
 }
-/* .StartGame .size-selection-container {
-  margin-bottom: 10px;
-} */
+
 .StartGame .difficulty-container {
   display: flex;
   align-items: center;
-  /* flex-direction: column; */
 }
 .StartGame button {
   box-sizing: border-box;
@@ -80,8 +75,6 @@ option {
   border-left: 0.1em solid floralwhite;
   border-right: 0.2em solid floralwhite;
   border-bottom: 0.25em solid floralwhite;
-  /* border-top: none;
-  border-left: none; */
 
   cursor: pointer;
 }
